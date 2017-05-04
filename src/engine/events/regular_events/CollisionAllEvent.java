@@ -3,6 +3,7 @@ package engine.events.regular_events;
 import engine.Parameter;
 import engine.collisions.Collision;
 import engine.collisions.CollisionSide;
+import engine.entities.Entity;
 import engine.events.Event;
 
 /**

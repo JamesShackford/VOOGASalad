@@ -136,6 +136,17 @@ I worked on the following parts during this project:
 * http://restfb.com/documentation/
 * http://x-stream.github.io/tutorial.html
 * http://stackoverflow.com/questions/15519626/how-to-get-all-classes-names-in-a-package
+* http://www.vgmaps.com/Reviews/Review-DS-NewSuperMarioBros.htm
+* https://www.mariowiki.com/File:8-Castle2nsmbwii.png
+* http://mario.wikia.com/wiki/Koopa_Paratroopa
+* https://www.mariowiki.com/File:SwooperSMG.png 
+* https://www.mariowiki.com/File:Bowser_-_Mario_Party_10.png
+* http://www.suppermariobroth.com/post/76693190799/bowsers-castle-background-from-new-super-mario
+* http://mario.wikia.com/wiki/File:Question_Block_Art_-_New_Super_Mario_Bros.png
+* http://www.clker.com/clipart-9803.html
+* https://www.nickanimationstudio.com/spongebob-squarepantshttp://www.sporistics.com/?p=asset:500543929175
+* http://spongebob.wikia.com/wiki/Squidward_Tentacles
+
 
 ### Files Used to Start the Project (the class(es) containing main)
 

@@ -377,7 +377,6 @@ public class GameLoader {
 				newPath = path.replace(resourceManager.getForwardSlash(), File.separator);
 			}
 		}
-
 		return newPath;
 	}
 

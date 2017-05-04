@@ -1,5 +1,6 @@
 package utils.math;
 
+
 /**
  * Check whether a string is an int.
  * 

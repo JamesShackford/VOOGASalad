@@ -8,7 +8,8 @@ import utils.math.IntChecker;
  * a Collision is the first and second Entity involved in the collision as well
  * as the direction from which the first Entity collided with the second Entity.
  * 
- * @author Kyle Finke Nikita Zemlevskiy
+ * @author Kyle Finke
+ * @author Nikita Zemlevskiy
  *
  */
 public class Collision implements CollisionInterface {

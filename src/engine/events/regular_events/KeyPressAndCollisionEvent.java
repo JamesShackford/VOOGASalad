@@ -18,6 +18,7 @@ import javafx.scene.input.KeyCode;
 public class KeyPressAndCollisionEvent extends CollisionAllEvent {
 	public KeyPressEvent keyPressEvent;
 	public KeyPressAndCollisionEvent() {
+
 		/*addParam(new Parameter(getResource("Key"), KeyCode.class, KeyCode.UNDEFINED));
 		addParam(new Parameter(getResource("Entity"), String.class, ""));
 		addParam(new Parameter(getResource("DetectionDepth"), double.class, 0.0));

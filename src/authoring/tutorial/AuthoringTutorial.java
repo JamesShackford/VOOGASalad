@@ -28,6 +28,7 @@ public class AuthoringTutorial extends View {
 
 	private Workspace workspace;
 	private Label label;
+	private Stage stage;
 
 	public AuthoringTutorial(Workspace workspace) {
 		this.workspace = workspace;
@@ -37,7 +38,7 @@ public class AuthoringTutorial extends View {
 	
 	private void show() {
 		setupView();
-		Stage stage = workspace.getMaker().display("AuthoringTourMenuItem", 260, 400, this, Modality.NONE, false);
+		stage = workspace.getMaker().display("AuthoringTourMenuItem", 260, 400, this, Modality.NONE, false);
 		stage.setX(workspace.getScene().getWindow().getX() + workspace.getScene().getWindow().getWidth() + PADDING);
 		stage.setY(workspace.getScene().getWindow().getY());
 	}
@@ -141,6 +142,7 @@ public class AuthoringTutorial extends View {
 									workspace.getPolyglot().get("SecondAction").get(), () -> afterAction("SeventeenthStep",
 										() -> savedAction("EighteenthStep",()->savedCharacter("NinteenthStep",()->canvasCharacter("TwentiethStep",()->savedAction("TwentyFirstStep",
 													()->savedCharacter("TwentySecondStep",()->label.textProperty().bind(workspace.getPolyglot().get("TwentyThirdStep")))),false)))))))));
+		
 	}
 
 	private void addedCollision(String s, Runnable r) {

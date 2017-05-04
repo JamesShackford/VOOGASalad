@@ -66,8 +66,7 @@ public class Workspace extends View
 	 * @param path
 	 *            the path of the Game to be loaded.
 	 */
-	public Workspace(Game game, Polyglot polyglot, ResourceBundle IOResources)
-	{
+	public Workspace(Game game, Polyglot polyglot, ResourceBundle IOResources) {
 		this.game = game;
 		this.polyglot = polyglot;
 		this.IOResources = IOResources;
@@ -78,26 +77,22 @@ public class Workspace extends View
 	/**
 	 * @return the Workspace's current Game.
 	 */
-	public Game getGame()
-	{
+	public Game getGame() {
 		return game;
 	}
 
-	public Networking getNetworking()
-	{
+	public Networking getNetworking() {
 		return networking;
 	}
 
-	public Panel getPanel()
-	{
+	public Panel getPanel() {
 		return panel;
 	}
 
 	/**
 	 * Initializes the Workspace's components.
 	 */
-	private void setup()
-	{
+	private void setup() {
 		undoStack = new Stack<UndoableCommand>();
 		redoStack = new Stack<UndoableCommand>();
 		networking = new Networking(this);
@@ -115,14 +110,11 @@ public class Workspace extends View
 		setupDragToAddEntity();
 	}
 
-	public void received(Packet packet)
-	{
+	public void received(Packet packet) {
 		if (packet instanceof EntityListInfo) {
-			Platform.runLater(new Runnable()
-			{
+			Platform.runLater(new Runnable() {
 				@Override
-				public void run()
-				{
+				public void run() {
 					defaults.getEntities().clear();
 					defaults.getEntities().addAll(((EntityListInfo) packet).getEntities());
 					((EntityListInfo) packet).getEntities().forEach(e -> updateEntity(e));
@@ -131,8 +123,7 @@ public class Workspace extends View
 		}
 	}
 
-	private void setupDragToAddEntity()
-	{
+	private void setupDragToAddEntity() {
 		panel.getEntityDisplay().getList().setOnDragDetected(e -> {
 			Entity addedEntity = panel.getEntityDisplay().getList().getSelectionModel().getSelectedItem();
 			addedEntity.setId(addedEntity.generateId());
@@ -156,8 +147,7 @@ public class Workspace extends View
 		});
 	}
 
-	private void deselectAllEntities()
-	{
+	private void deselectAllEntities() {
 		getLevelEditor().getCurrentLevel().getLayers().forEach(layer -> {
 			layer.getSelectedEntities().forEach(selectedEntity -> {
 				selectedEntity.setSelected(false);
@@ -165,15 +155,13 @@ public class Workspace extends View
 		});
 	}
 
-	public void execute(UndoableCommand command)
-	{
+	public void execute(UndoableCommand command) {
 		command.execute();
 		undoStack.push(command);
 		redoStack.clear();
 	}
 
-	public void undo()
-	{
+	public void undo() {
 		if (undoStack.size() > 0) {
 			UndoableCommand undoCommand = undoStack.pop();
 			undoCommand.unexecute();
@@ -181,8 +169,7 @@ public class Workspace extends View
 		}
 	}
 
-	public void redo()
-	{
+	public void redo() {
 		if (redoStack.size() > 0) {
 			UndoableCommand redoCommand = redoStack.pop();
 			redoCommand.execute();
@@ -190,8 +177,7 @@ public class Workspace extends View
 		}
 	}
 
-	private void load()
-	{
+	private void load() {
 		levelEditor.loadGame(game.getLevels());
 		defaults.setEntities(game.getDefaults());
 		this.selectLoadedLevel(levelEditor.getCurrentLevel().getLayerCount());
@@ -202,23 +188,19 @@ public class Workspace extends View
 	 * Game's construction is finalized; and a call to GameData is made to save
 	 * the Game.
 	 */
-	public void save()
-	{
+	public void save() {
 		TextInputDialog dialog = maker.makeTextInputDialog("SaveTitle", "SaveHeader", "SaveLabel", game.getName());
 		Optional<String> result = dialog.showAndWait();
 		result.ifPresent(name -> save(name));
 	}
 
-	private void save(String title)
-	{
+	private void save(String title) {
 		game.setName(title);
 		String path = askForOutputPath();
 		if (!path.equals("")) {
-			Task<Void> task = new Task<Void>()
-			{
+			Task<Void> task = new Task<Void>() {
 				@Override
-				public Void call() throws InterruptedException
-				{
+				public Void call() throws InterruptedException {
 					createGame();
 					data.saveGame(game, path);
 					return null;
@@ -229,8 +211,7 @@ public class Workspace extends View
 
 	}
 
-	private String askForOutputPath()
-	{
+	private String askForOutputPath() {
 		String directory = new File(IOResources.getString("GamesPath")).getAbsolutePath();
 		DirectoryChooser chooser = maker.makeDirectoryChooser(directory, "GameSaverTitle");
 		File selectedDirectory = chooser.showDialog(getScene().getWindow());
@@ -247,59 +228,51 @@ public class Workspace extends View
 	 *            the Game to test.
 	 * 
 	 */
-	public void test()
-	{
+	public void test() {
 		createGame();
 		Stage stage = new Stage();
 		new BasicPlayer(stage, game.clone(), polyglot, IOResources, true);
 		stage.show();
 	}
 
-	private void createGame()
-	{
+	private void createGame() {
 		game.setLevels(levelEditor.getLevels());
 		game.setDefaults(defaults.getEntities());
 	}
 
-	public ComponentMaker getMaker()
-	{
+	public ComponentMaker getMaker() {
 		return maker;
 	}
 
-	public Polyglot getPolyglot()
-	{
+	public Polyglot getPolyglot() {
 		return polyglot;
 	}
 
 	/**
 	 * @return the ResourceBundle for this View's descendants.
 	 */
-	public ResourceBundle getIOResources()
-	{
+	public ResourceBundle getIOResources() {
 		return IOResources;
 	}
 
 	/**
 	 * @return the SplitPane governing this View.
 	 */
-	public SplitPane getPane()
-	{
+	public SplitPane getPane() {
 		return pane;
 	}
 
 	/**
 	 * @return the default Entities the user has created.
 	 */
-	public DefaultEntities getDefaults()
-	{
+	public DefaultEntities getDefaults() {
 		return defaults;
 	}
 
 	/**
 	 * @return the selected Entity.
 	 */
-	public Entity getSelectedEntity()
-	{
+	public Entity getSelectedEntity() {
 		return defaults.getSelectedEntity();
 	}
 
@@ -309,8 +282,7 @@ public class Workspace extends View
 	 * another layer.
 	 * 
 	 */
-	public void addLayer()
-	{
+	public void addLayer() {
 		levelEditor.getCurrentLevel().newLayer();
 	}
 
@@ -322,8 +294,7 @@ public class Workspace extends View
 	 * @param number
 	 *            the layer's identifier.
 	 */
-	public void selectLayer(int number)
-	{
+	public void selectLayer(int number) {
 		levelEditor.getCurrentLevel().selectLayer(number);
 	}
 
@@ -335,23 +306,19 @@ public class Workspace extends View
 	 * @param newLevelNum
 	 *            the number of the new level.
 	 */
-	public void selectExistingLevel(String oldLevel, String newLevel)
-	{
+	public void selectExistingLevel(String oldLevel, String newLevel) {
 		panel.selectExistingLevelBox(oldLevel, newLevel);
 	}
 
-	public void selectLoadedLevel(List<String> nameList)
-	{
+	public void selectLoadedLevel(List<String> nameList) {
 		panel.selectLoadedLevelBox(nameList);
 	}
 
-	public void selectLoadedLevel(int layerCount)
-	{
+	public void selectLoadedLevel(int layerCount) {
 		panel.selectLoadedLevelBox(layerCount);
 	}
 
-	public LevelEditor getLevelEditor()
-	{
+	public LevelEditor getLevelEditor() {
 		return levelEditor;
 	}
 
@@ -363,8 +330,7 @@ public class Workspace extends View
 	 * @param layer
 	 *            the identifier of the layer to be deleted.
 	 */
-	public void deleteLayer(int layer)
-	{
+	public void deleteLayer(int layer) {
 		levelEditor.getCurrentLevel().deleteLayer(layer);
 	}
 
@@ -374,7 +340,6 @@ public class Workspace extends View
 	 * @param entity
 	 *            the Entity to replace the old Entities with.
 	 */
-
 	public void updateEntity(Entity entity)
 	{
 		levelEditor.updateEntity(entity);
