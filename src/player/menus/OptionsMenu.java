@@ -134,9 +134,8 @@ public class OptionsMenu extends AbstractMenu {
 	}
 
 	private Parameter getKeyParameter(Event event) {
-		// Get parameters that are not numbers
 		List<Parameter> params = event.getParams().stream()
-				.filter(s -> !s.getObject().toString().matches("-?\\d+(\\.\\d+)?")).collect(Collectors.toList());
+				.filter(s -> s.getName().equals("Key")).collect(Collectors.toList());
 		return params.get(0);
 	}
 

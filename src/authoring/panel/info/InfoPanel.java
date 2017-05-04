@@ -22,6 +22,7 @@ public class InfoPanel extends View {
 		VBox container = new VBox(10);
 		setCenter(container);
 		editor = new HTMLEditor();
+		editor.setHtmlText(workspace.getGame().getInfo());
 		Button save = workspace.getMaker().makeButton("SaveButtonEditor", e -> this.save(), true);
 		container.getChildren().addAll(editor, save);
 	}
