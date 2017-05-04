@@ -60,7 +60,7 @@ public class HighscoreMenu extends AbstractMenu {
 	}
 
 	private TableColumn<Score, String> makeTimeColumn() {
-		TableColumn<Score, String> time = new TableColumn<>("Time Left");
+		TableColumn<Score, String> time = new TableColumn<>("Time");
 		time.setCellValueFactory(new PropertyValueFactory<>("time"));
 		time.prefWidthProperty().bind(scoreTable.widthProperty().multiply(.29));
 

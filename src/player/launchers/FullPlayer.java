@@ -78,6 +78,7 @@ public class FullPlayer extends AbstractPlayer {
 			playButton.setGraphic(this.pauseImage);
 			this.getRunningGameLoop().startTimeline();
 			mediaManager.playSong();
+
 		} else {
 			isPaused = true;
 			playButton.textProperty().bind(this.getPolyglot().get("PlayButtonText"));
