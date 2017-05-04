@@ -12,7 +12,7 @@ import engine.actions.Action;
 public class SetYAccelerationAction extends Action {
 
 	public SetYAccelerationAction() {
-		addParam(new Parameter(getResource("YAcceleration"), Double.class, 0));
+		addParam(new Parameter(getResource("YAcceleration"), double.class, 0.0));
 	}
 
 	@Override
