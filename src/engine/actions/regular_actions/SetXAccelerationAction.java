@@ -12,7 +12,7 @@ import engine.actions.Action;
 public class SetXAccelerationAction extends Action {
 
 	public SetXAccelerationAction() {
-		addParam(new Parameter(getResource("XAcceleration"), Double.class, 0));
+		addParam(new Parameter(getResource("XAcceleration"), double.class, 0.0));
 	}
 
 	@Override
