@@ -8,6 +8,12 @@ import javafx.scene.layout.VBox;
 import utils.views.View;
 
 /**
+ * 
+ * A class encapsulating the Workspace's MenuBar.
+ * 
+ * It provides very little functionality: the creation of actual Menus is
+ * delegated to subclasses of WorkspaceMenu in the setupMenus() method.
+ * 
  * @author Elliott Bolzan
  *
  */
@@ -17,7 +23,10 @@ public class WorkspaceMenuBar extends View {
 	private MenuBar bar;
 
 	/**
+	 * Creates a WorkspaceMenuBar.
 	 * 
+	 * @param workspace
+	 *            the Workspace that owns this MenuBar.
 	 */
 	public WorkspaceMenuBar(Workspace workspace) {
 		this.workspace = workspace;

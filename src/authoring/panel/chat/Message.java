@@ -1,16 +1,15 @@
-/**
- * 
- */
 package authoring.panel.chat;
 
 import authoring.networking.Packet;
 
 /**
+ * 
+ * This class is part of the Chat system. Represents one Message, and as such,
+ * has a username and actual content (a String). Implements Serializable to be
+ * sent over networks.
+ * 
  * @author Elliott Bolzan
  *
- *         This class is part of the Chat system. Represents one Message, and as
- *         such, has a username and actual content (a String). Implements
- *         Serializable to be sent over networks.
  */
 public class Message extends Packet {
 
@@ -20,8 +19,11 @@ public class Message extends Packet {
 
 	/**
 	 * Creates a Message.
-	 * @param username the username of the Message's sender.
-	 * @param message the content of the Message.
+	 * 
+	 * @param username
+	 *            the username of the Message's sender.
+	 * @param message
+	 *            the content of the Message.
 	 */
 	public Message(String username, String message) {
 		this.username = username;

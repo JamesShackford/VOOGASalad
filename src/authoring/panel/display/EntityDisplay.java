@@ -17,11 +17,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 /**
+ * 
+ * A class that displays the user's default Entities. Allows the user to edit
+ * and delete them, or add new ones. Also allows the user to drag and drop
+ * Entities to the Canvas.
+ * 
  * @author Elliott Bolzan
  *
- *         A class that displays the user's default Entities. Allows the user to
- *         edit and delete them, or add new ones. Also allows the user to drag
- *         and drop Entities to the Canvas.
  */
 public class EntityDisplay extends EditableContainer {
 
@@ -48,6 +50,13 @@ public class EntityDisplay extends EditableContainer {
 		return list;
 	}
 
+	/**
+	 * @return the EntityDisplay's EntityMaker.
+	 */
+	public EntityMaker getEntityMaker() {
+		return entityMaker;
+	}
+	
 	/**
 	 * Add an Entity to the EntityDisplay.
 	 * 
@@ -94,14 +103,19 @@ public class EntityDisplay extends EditableContainer {
 		}
 	}
 
+	/**
+	 * 
+	 * A helper method for the editing process. Can be called with an Entity
+	 * directly (from the Chat system and its hyperlinks / hashtag references,
+	 * for example). Facilitates the process of editing Entities from outside
+	 * this class.
+	 * 
+	 * @param entity
+	 *            the Entity to be edited.
+	 */
 	public void editHelper(Entity entity) {
 		setCurrentlyEditing(entity);
 		entityMaker = new EntityMaker(getWorkspace(), this, entity);
-	}
-
-	@Override
-	public void setContainerPos() {
-		entityMaker.setStagePos(0, 0);
 	}
 
 	/*
@@ -162,10 +176,6 @@ public class EntityDisplay extends EditableContainer {
 		Thumbnail thumbnail = new LiveThumbnail(entity.imagePathProperty(), 50, 50);
 		box.getChildren().addAll(thumbnail, name);
 		return box;
-	}
-
-	public EntityMaker getEntityMaker() {
-		return entityMaker;
 	}
 
 }

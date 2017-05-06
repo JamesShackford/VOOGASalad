@@ -17,10 +17,11 @@ import polyglot.Polyglot;
 
 /**
  * 
+ * Displays a progress bar while a certain task runs in the background. Once the
+ * task is completed, the Stage can be retrieved to be closed.
+ * 
  * Adapted from:
  * http://stackoverflow.com/questions/29625170/display-popup-with-progressbar-in-javafx.
- * 
- * Displays a progress bar while a certain task runs in the background.
  * 
  * @author Elliott Bolzan
  * 
@@ -36,8 +37,10 @@ public class ProgressDialog {
 	/**
 	 * Returns a ProgressDialog.
 	 * 
-	 * @param polyglot the internationalization information.
-	 * @param IOResources the ResourceBundle for IO.
+	 * @param polyglot
+	 *            the internationalization information.
+	 * @param IOResources
+	 *            the ResourceBundle for IO.
 	 */
 	public ProgressDialog(Polyglot polyglot, ResourceBundle IOResources) {
 		this.polyglot = polyglot;

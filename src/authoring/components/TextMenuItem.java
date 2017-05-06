@@ -9,9 +9,10 @@ import javafx.scene.input.KeyCombination;
 
 /**
  * 
- * A custom-width MenuItem. Makes use of a Label to achieve its desired effect.
- * Provides several constructors for different kinds of text to show to the
- * user.
+ * A custom-width MenuItem. Makes use of a Label to achieve its desired effect:
+ * there is no way to increase the width of a MenuItem without setting its
+ * internal components manually. Provides several constructors for different
+ * kinds of text to show to the user.
  * 
  * @author Elliott Bolzan
  *

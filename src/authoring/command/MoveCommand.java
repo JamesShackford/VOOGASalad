@@ -6,7 +6,7 @@ import javafx.util.Duration;
 
 /**
  * 
- * @author jimmy
+ * @author jimmy (animations by Elliott Bolzan)
  *
  */
 public class MoveCommand extends EntityCommand {

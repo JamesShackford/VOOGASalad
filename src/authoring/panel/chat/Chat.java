@@ -19,11 +19,15 @@ import polyglot.Case;
 import utils.views.View;
 
 /**
+ * 
+ * A class representing a chat system. Allows for a username, the viewing of
+ * sent messages, and the sending of messages. Plays a chat sound when messages
+ * are received.
+ * 
+ * Interacts with the Log class, which is actually responsible for the
+ * displaying of messages to the user.
+ * 
  * @author Elliott Bolzan
- *
- *         A class representing a ChatView. Allows for a username, the viewing
- *         of sent messages, and the sending of messages. Makes use of a
- *         networking library.
  *
  */
 public class Chat extends View {
@@ -88,6 +92,13 @@ public class Chat extends View {
 		}
 	}
 
+	/**
+	 * Called when a Packet is received by the application. A sound is played
+	 * and the log is updated.
+	 * 
+	 * @param packet
+	 *            the Packet that was received.
+	 */
 	public void received(Packet packet) {
 		Platform.runLater(new Runnable() {
 			@Override

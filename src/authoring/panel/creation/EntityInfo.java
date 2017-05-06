@@ -20,12 +20,12 @@ import javafx.stage.FileChooser;
 import utils.views.View;
 
 /**
+ * This class serves to display and let the user edit the Entity's basic
+ * information. As of now, it encapsulates a Thumbnail for the Entity's image,
+ * its name, its scale, and a button letting the user save his or her changes.
+ * 
  * @author Elliott Bolzan
  *
- *         This class serves to display and let the user edit the Entity's basic
- *         information. As of now, it encapsulates a Thumbnail for the Entity's
- *         image, its name, its scale, and a button letting the user save his or
- *         her changes.
  */
 public class EntityInfo extends View {
 
@@ -53,6 +53,34 @@ public class EntityInfo extends View {
 		this.workspace = workspace;
 		this.editor = editor;
 		setup();
+	}
+
+	/**
+	 * @return the Entity's name.
+	 */
+	public String getName() {
+		return nameField.getText();
+	}
+
+	/**
+	 * @return the Entity's image path.
+	 */
+	public String getImagePath() {
+		return thumbnail.getImagePath();
+	}
+
+	/**
+	 * @return the Entity's image width, as modified by the scale-adjustment.
+	 */
+	public double getImageWidth() {
+		return widthSlider.getValue();
+	}
+
+	/**
+	 * @return the Entity's image height, as modified by the scale-adjustment.
+	 */
+	public double getImageHeight() {
+		return heightSlider.getValue();
 	}
 
 	private void setup() {
@@ -112,9 +140,6 @@ public class EntityInfo extends View {
 		return box;
 	}
 
-	/**
-	 * @return
-	 */
 	private VBox createSliderBox(String titleProperty, Slider slider) {
 		VBox box = new VBox(4);
 		Label label = new Label();
@@ -163,10 +188,6 @@ public class EntityInfo extends View {
 				(ov, old_val, new_val) -> sliderPropertiesHelper(old_val, new_val, heightSlider, widthSlider));
 	}
 
-	/**
-	 * @param old_val
-	 * @param new_val
-	 */
 	private void sliderPropertiesHelper(Number old_val, Number new_val, Slider first, Slider second) {
 		if (linked && !second.isValueChanging()) {
 			double toMove = second.getMax() * (new_val.doubleValue() - old_val.doubleValue()) / first.getMax();
@@ -175,44 +196,30 @@ public class EntityInfo extends View {
 	}
 
 	/**
-	 * @return the Entity's name.
+	 * Modify the save button's action for the tutorial.
+	 * 
+	 * @param r
+	 *            the Runnable to be run when the save button is clicked.
 	 */
-	public String getName() {
-		return nameField.getText();
-	}
-
-	/**
-	 * @return the Entity's image path.
-	 */
-	public String getImagePath() {
-		return thumbnail.getImagePath();
-	}
-
-	/**
-	 * @return the Entity's image width, as modified by the scale-adjustment.
-	 */
-	public double getImageWidth() {
-		return widthSlider.getValue();
-	}
-
-	/**
-	 * @return the Entity's image height, as modified by the scale-adjustment.
-	 */
-	public double getImageHeight() {
-		return heightSlider.getValue();
-	}
-
-	public void changeSaveHandler(Runnable r){
+	public void changeSaveHandler(Runnable r) {
 		saveButton.setOnAction(e -> {
 			editor.save();
 			r.run();
 		});
 	}
-	
-	public void changeImageHandler(Runnable r){
+
+	/**
+	 * Modify the image selection button's action on click for the tutorial.
+	 *
+	 * @param r
+	 *            the Runnable to be run when the image selection butotn is
+	 *            clicked.
+	 */
+	public void changeImageHandler(Runnable r) {
 		pickButton.setOnAction(e -> {
 			pickImage();
 			r.run();
 		});
 	}
+
 }
