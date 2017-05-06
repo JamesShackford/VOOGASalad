@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a single layer of entities. A layer is simply a list of
  * EntityViews.
  * 
- * @author jimmy
+ * @author jimmy and Mina Mungekar
  *
  */
 public class Layer

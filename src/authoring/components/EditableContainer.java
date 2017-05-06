@@ -15,6 +15,7 @@ import utils.views.View;
 
 /**
  * @author Elliott Bolzan
+ * (modified by Mina Mungekar)
  *
  *         A superclass for all Views that: provide a list-style container
  *         (ListView or TableView), require editing functionality, deletion
@@ -159,7 +160,7 @@ public abstract class EditableContainer extends View {
 		newButton.setOnAction(e -> {createNew();
 									setContainerPos();
 									r.run();
-									editButton.setOnAction(event->createNew());
+									newButton.setOnAction(event->createNew());
 		});
 	}
 

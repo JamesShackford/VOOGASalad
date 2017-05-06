@@ -6,7 +6,7 @@ import authoring.tutorial.AuthoringTutorial;
 import javafx.scene.control.MenuItem;
 
 /**
- * @author Elliott Bolzan
+ * @author Elliott Bolzan and Mina Mungekar
  *
  */
 public class HelpMenu extends WorkspaceMenu {
