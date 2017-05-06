@@ -22,9 +22,15 @@ import polyglot.Polyglot;
 import polyglot.PolyglotException;
 
 /**
- * @author Elliott Bolzan
  * 
- *
+ * A class representing a view that allows the user to select the language for
+ * the application.
+ * 
+ * Once the user selects a language, a ProgressDialog is shown while the
+ * language is switched, on a different Thread. Once the switch is completed,
+ * the Stage is automatically closed and the user is returned to the StartMenu.
+ * 
+ * @author Elliott Bolzan
  * 
  */
 public class LanguagePicker {
@@ -34,6 +40,16 @@ public class LanguagePicker {
 	private List<String> languages;
 	private Stage stage;
 
+	/**
+	 * Creates a LanguagePicker.
+	 * 
+	 * @param polyglot
+	 *            the internationalization information for the application.
+	 * @param resources
+	 *            the ResourceBundle for the application.
+	 * @param languages
+	 *            the list of languages that can be switched to.
+	 */
 	public LanguagePicker(Polyglot polyglot, ResourceBundle resources, List<String> languages) {
 		this.polyglot = polyglot;
 		this.resources = resources;
@@ -41,6 +57,13 @@ public class LanguagePicker {
 		setupStage();
 		setupView();
 		stage.show();
+	}
+	
+	/**
+	 * @return the Stage for this LanguagePicker.
+	 */
+	public Stage getDialogStage() {
+		return stage;
 	}
 
 	private void setupStage() {
@@ -65,11 +88,7 @@ public class LanguagePicker {
 		scene.getStylesheets().add(resources.getString("StylesheetPath"));
 		stage.setScene(scene);
 	}
-
-	public Stage getDialogStage() {
-		return stage;
-	}
-
+	
 	private ListView<String> makeListView() {
 		ListView<String> list = new ListView<String>();
 		list.getStyleClass().add("visible-container");

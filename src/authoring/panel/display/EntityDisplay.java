@@ -69,7 +69,6 @@ public class EntityDisplay extends EditableContainer {
 			getWorkspace().updateEntity(entity);
 		}
 		getWorkspace().getDefaults().add(entity);
-
 		List<? extends Entity> addedSublist = getWorkspace().getDefaults().getEntities();
 		if (addedSublist.size() > 0) {
 			if (getWorkspace().getNetworking().isConnected()) {

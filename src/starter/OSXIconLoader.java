@@ -7,10 +7,12 @@ import javax.swing.ImageIcon;
 import com.apple.eawt.Application;
 
 /**
+ * 
+ * This class is only loaded if the operating system is Mac OS X. It serves to
+ * set the icon - on Apple machines only.
+ * 
  * @author Elliott Bolzan
  *
- *         This class is only loaded if the operating system is Mac OS X. It
- *         serves to set the icon - on Apple machines only.
  */
 public class OSXIconLoader {
 
