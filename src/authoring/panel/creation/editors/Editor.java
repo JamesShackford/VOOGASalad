@@ -29,14 +29,15 @@ import polyglot.Case;
 import utils.views.View;
 
 /**
+ * 
+ * A superclass for a number of editors in the Authoring Environment. All
+ * editors have commonalities: they have a ComboBox from which the user can
+ * choose the nature of that which is being edited, and they display the
+ * parameters for that which was selected. Finally, they all need to provide a
+ * save option. This is why this functionality was regrouped in one superclass.
+ * 
  * @author Elliott Bolzan
  *
- *         A superclass for a number of editors in the Authoring Environment.
- *         All editors have commonalities: they have a ComboBox from which the
- *         user can choose the nature of that which is being edited, and they
- *         display the parameters for that which was selected. Finally, they all
- *         need to provide a save option. This is why this functionality was
- *         regrouped in one superclass.
  */
 public abstract class Editor extends View {
 
@@ -70,7 +71,7 @@ public abstract class Editor extends View {
 		if (object != null)
 			update(object);
 	}
-	
+
 	public Workspace getWorkspace() {
 		return workspace;
 	}
@@ -192,19 +193,36 @@ public abstract class Editor extends View {
 		parameters.add(updatedParameter);
 	}
 
-	public void initTutorialAction(String s, Runnable r) {
+	/**
+	 * Begin the tutorial on the ComboBox. Displays an instruction tooltip and
+	 * runs an alternative Runnable.
+	 * 
+	 * @param instruction
+	 *            the instruction to be shown.
+	 * @param toRun
+	 *            the Runnable to be run on click, determined by the tutorial
+	 *            system.
+	 */
+	public void initTutorialAction(String instruction, Runnable toRun) {
 		comboBox.setOnAction((e) -> {
 			selected(comboBox.getSelectionModel().getSelectedItem());
-			if (comboBox.getValue().equals(s)) {
-				r.run();
+			if (comboBox.getValue().equals(instruction)) {
+				toRun.run();
 			}
 		});
 	}
 
-	public void changeSaveHandler(Runnable r) {
+	/**
+	 * Modify the handler for the Save button.
+	 * 
+	 * @param toRun
+	 *            the action to run when the save button is clicked, determine
+	 *            by the tutorial system.
+	 */
+	public void changeSaveHandler(Runnable toRun) {
 		saveButton.setOnAction(e -> {
 			save();
-			r.run();
+			toRun.run();
 		});
 	}
 

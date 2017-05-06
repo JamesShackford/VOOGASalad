@@ -1,21 +1,20 @@
 package polyglot;
 
 /**
+ * This enumerated type represents several possible text cases: upper case,
+ * lower case, title case.
+ * 
+ * A special case is provided: unchanged. When using this case, the output from
+ * Google's API will not be changed in terms of capitalization.
+ * 
+ * The enumerated type provides a method to convert a String to a case. Each
+ * case has its own method associated with it, which converts a String input to
+ * the desired case.
+ *
+ * Title case conversion adapted from:
+ * http://stackoverflow.com/questions/1086123/string-conversion-to-title-case.
+ * 
  * @author Elliott Bolzan
- *
- *         This enumerated type represents several possible text cases: upper
- *         case, lower case, title case.
- * 
- *         A special case is provided: unchanged. When using this case, the
- *         output from Google's API will not be changed in terms of
- *         capitalization.
- * 
- *         The enumerated type provides a method to convert a String to a case.
- *         Each case has its own method associated with it, which converts a
- *         String input to the desired case.
- *
- *         Title case conversion adapted from:
- *         http://stackoverflow.com/questions/1086123/string-conversion-to-title-case.
  */
 public enum Case {
 

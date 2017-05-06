@@ -13,22 +13,22 @@ import polyglot.language.Language;
 import polyglot.language.LanguageManager;
 
 /**
+ * 
+ * The highest-level class in the polyglot utility.
+ * 
+ * The class holds references to translateAPI, which processes requests to
+ * Google's Cloud API, and to manager, which caches the languages that have been
+ * translated into.
+ * 
+ * Polyglot should be called with an APIKey for Google's Cloud API, and a path
+ * to a ResourceBundle. The latter is done for maximal flexibility and easier
+ * integration: the user can keep using a Properties file, and does not have to
+ * know what takes place behind the scenes.
+ * 
+ * In reality, the data from the ResourceBundle is cached, as are subsequent
+ * translations.
+ * 
  * @author Elliott Bolzan
- *
- *         The highest-level class in the polyglot utility.
- * 
- *         The class holds references to translateAPI, which processes requests
- *         to Google's Cloud API, and to manager, which caches the languages
- *         that have been translated into.
- * 
- *         Polyglot should be called with an APIKey for Google's Cloud API, and
- *         a path to a ResourceBundle. The latter is done for maximal
- *         flexibility and easier integration: the user can keep using a
- *         Properties file, and does not have to know what takes place behind
- *         the scenes.
- * 
- *         In reality, the data from the ResourceBundle is cached, as are
- *         subsequent translations.
  *
  */
 public class Polyglot {
@@ -170,7 +170,6 @@ public class Polyglot {
 		return manager.createStringBinding(key, textCase);
 	}
 
-	
 	/**
 	 * Provides the caller with the original version of the value for the key
 	 * parameter.
@@ -183,5 +182,5 @@ public class Polyglot {
 	public String getOriginal(String key) {
 		return manager.getOriginal(key);
 	}
-	
+
 }
