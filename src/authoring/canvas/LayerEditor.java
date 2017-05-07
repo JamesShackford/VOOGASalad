@@ -29,7 +29,7 @@ import utils.views.View;
  * level can be represented by its own LayerEditor, and thus a Level can be
  * created from the entities on a LayerEditor.
  * 
- * @author jimmy Modified by Mina Mungekar
+ * @author jimmy (modified by Mina Mungekar and Elliott Bolzan)
  *
  */
 public class LayerEditor extends View {
