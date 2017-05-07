@@ -22,7 +22,11 @@ public class Level implements LevelInterface, Selectable {
 	private List<Entity> entities;
 	private CameraEntity camera;
 	private BackgroundEntity background;
-
+	
+	/**
+	 * Instantiates the level with entites set to a blank ArrayList, and camera and background set to
+	 * new instances.
+	 */
 	public Level() {
 		entities = new ArrayList<>();
 		camera = new CameraEntity();
@@ -30,7 +34,7 @@ public class Level implements LevelInterface, Selectable {
 	}
 
 	/**
-	 * External Engine API. Needed for gameplay.
+	 * External Engine API. Needed for gameplay. Returns the list of Entities.
 	 * 
 	 * @return
 	 */
@@ -39,7 +43,7 @@ public class Level implements LevelInterface, Selectable {
 	}
 
 	/**
-	 * External Engine API. Needed for authoring (and possibly gameplay).
+	 * External Engine API. Needed for authoring (and possibly gameplay). Adds the Entity specified.
 	 * 
 	 * @param entity
 	 * @return
@@ -49,30 +53,47 @@ public class Level implements LevelInterface, Selectable {
 	}
 
 	/**
-	 * External Engine API. Needed for authoring (and possibly gameplay).
+	 * External Engine API. Needed for authoring (and possibly gameplay). Removes the Entity specified.
 	 * 
 	 * @param entity
 	 */
 	public void removeEntity(Entity entity) {
 		entities.remove(entity);
 	}
-
+	
+	/**
+	 * @return camera
+	 */
 	public CameraEntity getCamera() {
 		return this.camera;
 	}
-
+	
+	/**
+	 * @param camera
+	 */
 	public void setCamera(CameraEntity camera) {
 		this.camera = camera;
 	}
-
+	
+	/**
+	 * @return background
+	 */
 	public BackgroundEntity getBackground() {
 		return this.background;
 	}
-
+	
+	/**
+	 * Sets the background
+	 * @param background
+	 */
 	public void setBackground(BackgroundEntity background) {
 		this.background = background;
 	}
-
+	
+	/**
+	 * Adds all the entities specified to this Level's Entity list.
+	 * @param entities
+	 */
 	public void addEntities(List<Entity> entities) {
 		this.entities.addAll(entities);
 	}
