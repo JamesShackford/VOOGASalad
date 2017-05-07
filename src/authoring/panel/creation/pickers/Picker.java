@@ -13,14 +13,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /**
- * @author Elliott Bolzan
  * 
- *         A superclass for pickers in the EntityMaker. The pickers have common
- *         functionality: they all need to edit, delete, and select elements
- *         (functionality inherited from EditableContainer), and they all need
- *         functionality specific to their nature as a picker (updating,
- *         selecting a GameObject, etc). For this reason, it made sense to
- *         create a hierarchy and reduce duplicated code.
+ * A superclass for pickers in the EntityMaker. The pickers have common
+ * functionality: they all need to edit, delete, and select elements
+ * (functionality inherited from EditableContainer), and they all need
+ * functionality specific to their nature as a picker (updating, selecting a
+ * GameObject, etc). For this reason, it made sense to create a hierarchy and
+ * reduce duplicated code.
+ * 
+ * @author Elliott Bolzan
  *
  */
 public abstract class Picker extends EditableContainer {
@@ -71,8 +72,14 @@ public abstract class Picker extends EditableContainer {
 		setTop(toolBar);
 	}
 
-	public void attachInfoTooltip(StringBinding s1) {
-		new CustomTooltip(s1, infoLabel);
+	/**
+	 * Attach an tooltip to the information label.
+	 * 
+	 * @param string
+	 *            the StringBinding to be attached to the information label.
+	 */
+	public void attachInfoTooltip(StringBinding string) {
+		new CustomTooltip(string, infoLabel);
 	}
 
 	/**

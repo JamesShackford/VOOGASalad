@@ -4,23 +4,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import authoring.Workspace;
+import authoring.command.AddInfo;
 import authoring.components.Direction;
 import authoring.panel.chat.Chat;
 import authoring.panel.display.EntityDisplay;
 import authoring.panel.info.InfoPanel;
+import engine.entities.Entity;
 import javafx.beans.binding.StringBinding;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Accordion;
+import javafx.scene.image.Image;
 import polyglot.Case;
 import utils.views.CollapsibleView;
 import utils.views.View;
 
 /**
+ * A class that encapsulates a panel architecture. New subpanels can be added
+ * using a single line of code, placed in the createSubviews() method. This
+ * system seeks to facilitate the addition of new subviews and to reduce
+ * duplicated boilerplate code.
+ * 
  * @author Elliott Bolzan
  *
- *         A class that encapsulates a panel architecture. New subpanels can be
- *         added using a single line of code, placed in the createSubviews()
- *         method. This system seeks to facilitate the addition of new subviews
- *         and to reduce duplicated boilerplate code.
  */
 public class Panel extends CollapsibleView {
 
@@ -83,33 +91,70 @@ public class Panel extends CollapsibleView {
 		return entityDisplay;
 	}
 
+	/**
+	 * @return the Chat.
+	 */
 	public Chat getChat() {
 		return chat;
 	}
 
 	/**
-	 * When the user switches between level tabs or selects a new level, the
-	 * layerPanel must be notified so that the combobox will show only the names
-	 * of the layers contained in the new level.
-	 * 
-	 * @param layerNum
+	 * Initialize the dragging system. Allows for Entities to be dragged from
+	 * the Panel's EntityDisplay to the Workspace's Canvas.
 	 */
+	public void setupDragToAddEntity() {
+		entityDisplay.getList().setOnDragDetected(e -> {
+			Entity addedEntity = entityDisplay.getList().getSelectionModel().getSelectedItem();
+			addedEntity.setId(addedEntity.generateId());
+			Image image = new Image(addedEntity.getImagePath());
+			setCursor(new ImageCursor(image, 0, 0));
+			entityDisplay.getList().setOnMouseReleased(e2 -> {
+				Point2D canvasPoint = workspace.getLevelEditor().getCurrentLevel().getCanvas().getExpandablePane()
+						.screenToLocal(new Point2D(e2.getScreenX(), e2.getScreenY()));
+				Point2D workspacePoint = workspace.screenToLocal(new Point2D(e2.getScreenX(), e2.getScreenY()));
+				Bounds canvasBounds = workspace.getLevelEditor().getCurrentLevel().getCanvas()
+						.localToScene(workspace.getLevelEditor().getCurrentLevel().getCanvas().getBoundsInLocal());
+				// only add entity to canvas if the mouse intersects the canvas.
+				if (canvasBounds.intersects(workspacePoint.getX(), workspacePoint.getY(), 0, 0)) {
+					AddInfo addInfo = new AddInfo(addedEntity.getName(), canvasPoint.getX(), canvasPoint.getY(),
+							workspace.getLevelEditor().getCurrentLevel().getCurrentLayer());
+					deselectAllEntities();
+					workspace.getNetworking().sendIfConnected(addInfo);
+				}
+				setCursor(Cursor.DEFAULT);
+			});
+		});
+	}
+
+	private void deselectAllEntities() {
+		workspace.getLevelEditor().getCurrentLevel().getLayers().forEach(layer -> {
+			layer.getSelectedEntities().forEach(selectedEntity -> {
+				selectedEntity.setSelected(false);
+			});
+		});
+	}
 
 	/**
-	 * Select an existing level.
+	 * Select an existing level, taking into account the nature of the old level
+	 * and the new one.
 	 * 
-	 * @param layerNum
-	 *            the layer to be selected.
+	 * @param oldLevel
+	 *            a String representing the oldLevel.
+	 * @param newLevel
+	 *            a String representing the newLevel.
 	 */
-	public void selectExistingLevelBox(String oldLevel, String newLevel) {
-		layerPanel.selectLevelBox(oldLevel, newLevel);
+	public void selectExistingLevel(String oldLevel, String newLevel) {
+		layerPanel.selectLevel(oldLevel, newLevel);
 	}
 
-	public void selectLoadedLevelBox(List<String> nameList) {
-		layerPanel.selectLevelBox(nameList);
+	/**
+	 * Select a Level based on its number.
+	 * 
+	 * @param number
+	 *            the number of the Level to be switched to.
+	 */
+	public void selectLoadedLevel(int number) {
+		layerPanel.selectLevel(number);
 	}
 
-	public void selectLoadedLevelBox(int layerCount) {
-		layerPanel.selectLevelBox(layerCount);
-	}
 }

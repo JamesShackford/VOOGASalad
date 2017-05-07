@@ -8,7 +8,7 @@ import utils.animation.ResizeWidthTranslation;
 
 /**
  * 
- * @author jimmy
+ * @author jimmy (animations by Elliott Bolzan)
  *
  */
 public class ResizeCommand extends EntityCommand {

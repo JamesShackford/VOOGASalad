@@ -6,11 +6,21 @@ import authoring.tutorial.AuthoringTutorial;
 import javafx.scene.control.MenuItem;
 
 /**
+ * This subclass of WorkspaceMenu represents a HelpMenu. The user is given the
+ * following options: obtaining a list of key combinations and showing a
+ * tutorial.
+ * 
  * @author Elliott Bolzan
  *
  */
 public class HelpMenu extends WorkspaceMenu {
 
+	/**
+	 * Creates a HelpMenu.
+	 * 
+	 * @param workspace
+	 *            the Workspace that owns the HelpMenu.
+	 */
 	public HelpMenu(Workspace workspace) {
 		super(workspace);
 	}
