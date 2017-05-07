@@ -34,7 +34,13 @@ public class PlayerView extends View {
 		this.factory = new ComponentMaker(polyglot, IOResources);
 		setMinSize(420, 600);
 	}
-
+	
+	/**
+	 * Displays the scene
+	 * @param width
+	 * @param height
+	 * @return
+	 */
 	public Scene createScene(double width, double height) {
 		Scene scene = new Scene(this, width, height);
 		scene.getStylesheets().add(IOResources.getString("StylesheetPath"));
