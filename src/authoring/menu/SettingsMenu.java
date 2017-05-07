@@ -11,17 +11,25 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.FileChooser;
 
 /**
+ * 
+ * This subclass of WorkspaceMenu represents a Settings Menu. The following
+ * options are available to the user from this Menu: selecting a song for the
+ * game, determining whether the time increases or decreases, and setting the
+ * maximum or minimal time.
+ * 
  * @author Elliott Bolzan
  *
  */
 public class SettingsMenu extends WorkspaceMenu {
 
 	/**
+	 * Create a SettingsMenu.
+	 * 
 	 * @param workspace
+	 *            the Workspace that owns the SettingsMenu.
 	 */
 	public SettingsMenu(Workspace workspace) {
 		super(workspace);
-		// TODO Auto-generated constructor stub
 	}
 
 	/*

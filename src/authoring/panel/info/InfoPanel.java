@@ -9,13 +9,25 @@ import utils.views.View;
 
 /**
  * 
- * @author Jesse
+ * A class representing a view that serves to edit the game's instructions.
+ * These instructions will later be shown to the user from the Player.
+ * 
+ * When the user presses the Save button, the Workspace's reference to Game is
+ * updated.
+ * 
+ * @author Jesse Yue
  *
  */
 public class InfoPanel extends View {
 	private Workspace workspace;
 	private HTMLEditor editor;
 
+	/**
+	 * Creates an InfoPanel.
+	 * 
+	 * @param workspace
+	 *            the Workspace that owns this InfoPanel.
+	 */
 	public InfoPanel(Workspace workspace) {
 		super(workspace.getPolyglot().get("InfoTitle", Case.TITLE));
 		this.workspace = workspace;

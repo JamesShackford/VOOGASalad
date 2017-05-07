@@ -16,11 +16,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 
 /**
- * @author Elliott Bolzan
  * 
- *         This class lets the user view, edit, delete, and select Events he or
- *         she has created. It extends Picker, a superclass which provides its
- *         editing and deleting abilities.
+ * This class lets the user view, edit, delete, and select Events he or she has
+ * created. It extends Picker, a superclass which provides its editing and
+ * deleting abilities.
+ * 
+ * @author Elliott Bolzan
  *
  */
 public class EventPicker extends Picker {
@@ -189,12 +190,6 @@ public class EventPicker extends Picker {
 
 	private void setSelectedEvent() {
 		entityMaker.setSelectedEvent(list.getSelectionModel().getSelectedItem());
-	}
-
-	@Override
-	public void setContainerPos() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

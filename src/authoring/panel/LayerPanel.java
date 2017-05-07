@@ -2,7 +2,6 @@ package authoring.panel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,7 +25,11 @@ import utils.views.View;
 /**
  * The Layer Panel controls the addition and deletion of layers to the game,
  * allowing the user to set and modify foregrounds and backgrounds.
- * @author Mina Mungekar
+ * 
+ * These layers, in addition, can be used to prevent Entities from interacting
+ * with each other.
+ * 
+ * @author Mina Mungekar and Elliott Bolzan
  *
  */
 public class LayerPanel extends View {
@@ -36,6 +39,12 @@ public class LayerPanel extends View {
 	private Map<String, ArrayList<String>> nameList;
 	private ObservableList<String> selectionModel;
 
+	/**
+	 * Creates a LayerPanel.
+	 * 
+	 * @param workspace
+	 *            the Workspace that owns this LayerPanel.
+	 */
 	public LayerPanel(Workspace workspace) {
 		super(workspace.getPolyglot().get("LayerPanelTitle", Case.TITLE));
 		this.workspace = workspace;
@@ -72,7 +81,7 @@ public class LayerPanel extends View {
 	}
 
 	private void addLayer() {
-		workspace.addLayer();
+		workspace.getLevelEditor().getCurrentLevel().newLayer();
 		myBox.getItems().add("Layer" + " " + (myBox.getItems().size() + 1));
 		myBox.setValue("Layer" + " " + (myBox.getItems().size()));
 	}
@@ -87,7 +96,7 @@ public class LayerPanel extends View {
 	}
 
 	private void delete() {
-		workspace.deleteLayer(myBox.getSelectionModel().getSelectedIndex() + 1);
+		workspace.getLevelEditor().getCurrentLevel().deleteLayer(myBox.getSelectionModel().getSelectedIndex() + 1);
 		selectionModel.remove(myBox.getSelectionModel().getSelectedIndex());
 		myBox.setItems(selectionModel);
 		myBox.setValue(selectionModel.get(0));
@@ -99,21 +108,25 @@ public class LayerPanel extends View {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (newValue != null) {
-					workspace.selectLayer(myBox.getSelectionModel().getSelectedIndex() + 1);
+					workspace.getLevelEditor().getCurrentLevel()
+							.selectLayer(myBox.getSelectionModel().getSelectedIndex() + 1);
 				}
 			}
 		});
 	}
 
 	/**
-	 * selectLevelBox is called whenever levels are switched and the set of
-	 * layers changes. The new level reports its new layer set to the workspace,
-	 * which, in turn passes the new layer count to the combobox.
-	 * 
-	 * @param layerNum
+	 * Called whenever levels are switched and the set of layers changes. The
+	 * new level reports its new layer set to the Workspace, which, in turn
+	 * passes the new layer count to the ComboBox.
+	 *
+	 * @param oldLevel
+	 *            the String representing the oldLevel.
+	 * @param newLevel
+	 *            the String representing the newLevel.
+	 *
 	 */
-
-	public void selectLevelBox(String oldLevel, String newLevel) {
+	public void selectLevel(String oldLevel, String newLevel) {
 		nameList.put(oldLevel, new ArrayList<String>(selectionModel));
 		if (oldLevel.equals("+")) {
 			nameList.put(newLevel, new ArrayList<String>(selectionModel));
@@ -126,20 +139,12 @@ public class LayerPanel extends View {
 	}
 
 	/**
-	 * selectLevelBox is called whenever levels are switched and the set of
-	 * layers changes. The new level reports its new layer set to the workspace,
-	 * which, in turn passes the new layer count to the combobox.
+	 * Called when the Level must be switched and the layers modified.
 	 * 
 	 * @param layerNum
+	 *            the number of the layer.
 	 */
-	public void selectLevelBox(List<String> loadedList) {
-		myBox.getItems().clear();
-		selectionModel = FXCollections.observableArrayList(loadedList);
-		myBox.setItems(selectionModel);
-		myBox.setValue(selectionModel.get(0));
-	}
-
-	public void selectLevelBox(int layerNum) {
+	public void selectLevel(int layerNum) {
 		myBox.getItems().clear();
 		for (int i = 0; i < layerNum; i++) {
 			myBox.getItems().add(String.format("Layer %d", i + 1));

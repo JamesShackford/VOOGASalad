@@ -18,16 +18,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
+ * 
+ * A custom TableView cell used for displaying and editing both normal input
+ * (Strings, Numbers) and more complex inputs, like KeyCodes. Could be extended
+ * to provide different inputs, eventually.
+ * 
+ * Updating the cell's contents even on cancelEdit, functionality expected by
+ * most users, was achieved using information from this link:
+ * http://stackoverflow.com/questions/23632884/how-to-commit-when-clicking-outside-an-editable-tableview-cell-in-javafx.
+ * 
  * @author Elliott Bolzan
- * 
- *         A custom TableView cell used for displaying and editing both normal
- *         input (Strings, Numbers) and more complex inputs, like KeyCodes.
- *         Could be extended to provide different inputs, eventually.
- * 
- *         Updating the cell's contents even on cancelEdit, functionality
- *         expected by most users, was achieved using information from this
- *         link:
- *         http://stackoverflow.com/questions/23632884/how-to-commit-when-clicking-outside-an-editable-tableview-cell-in-javafx.
  *
  */
 public class EditingCell extends TableCell<Parameter, Object> {
@@ -49,6 +49,9 @@ public class EditingCell extends TableCell<Parameter, Object> {
 		invalidEdit = workspace.getPolyglot().getOriginal("InvalidEdit");
 	}
 
+	/* (non-Javadoc)
+	 * @see javafx.scene.control.TableCell#startEdit()
+	 */
 	@Override
 	public void startEdit() {
 		if (!isEmpty()) {
@@ -69,6 +72,9 @@ public class EditingCell extends TableCell<Parameter, Object> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javafx.scene.control.TableCell#cancelEdit()
+	 */
 	@Override
 	public void cancelEdit() {
 		if (getItem() == null || getItem() instanceof KeyCode) {
@@ -177,6 +183,9 @@ public class EditingCell extends TableCell<Parameter, Object> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javafx.scene.control.TableCell#commitEdit(java.lang.Object)
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void commitEdit(Object newValue) {

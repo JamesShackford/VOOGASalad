@@ -9,17 +9,16 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * @author Elliott Bolzan
- *
- *         This class provides a two-way mapping between Google's language codes
- *         and these language's display names. Because this functionality is
- *         used several times in polyglot, it has been abstracted into its own
- *         class.
  * 
- *         The data is originally loaded from a Properties file. Then, a reverse
- *         index is created, to simulate a two-way Map. This is possible,
- *         because there is a bijection between the language codes and the
- *         language display names.
+ * This class provides a two-way mapping between Google's language codes and
+ * these language's display names. Because this functionality is used several
+ * times in polyglot, it has been abstracted into its own class.
+ * 
+ * The data is originally loaded from a Properties file. Then, a reverse index
+ * is created, to simulate a two-way Map. This is possible, because there is a
+ * bijection between the language codes and the language display names.
+ * 
+ * @author Elliott Bolzan
  *
  */
 public class LanguageCodes {

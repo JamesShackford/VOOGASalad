@@ -1,6 +1,7 @@
 package engine.game.selectiongroup;
 
 /**
+ * For iterating over a SelectionGroup. Iterator Design Pattern.
  * 
  * @author Matthew Barbano
  *

@@ -1,6 +1,7 @@
 package engine.game.timer;
 
 /**
+ * Tick Strategy for counting down on the clock.
  * 
  * @author Matthew Barbano
  *

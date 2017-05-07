@@ -36,6 +36,20 @@ import polyglot.Case;
 import polyglot.Polyglot;
 import polyglot.PolyglotException;
 
+/**
+ * 
+ * The first class to be launched for the Application.
+ * 
+ * Initializes the polyglot and the ResourceBundle, two items that are then
+ * shared with the rest of the Application.
+ * 
+ * Displays a MenuBar with options for the user: a Game menu, in which one can
+ * create, edit, or play games, and a Language menu, in which one can switch the
+ * Application's language.
+ * 
+ * @author Elliott Bolzan
+ *
+ */
 public class StartMenu extends BorderPane {
 
 	private Stage stage;
@@ -44,6 +58,12 @@ public class StartMenu extends BorderPane {
 	private ComponentMaker maker;
 	private List<String> languages;
 
+	/**
+	 * Create a StartMenu.
+	 * 
+	 * @param primaryStage
+	 *            the Stage for the Application.
+	 */
 	public StartMenu(Stage primaryStage) {
 		this.stage = primaryStage;
 		try {
@@ -54,7 +74,7 @@ public class StartMenu extends BorderPane {
 		}
 		this.maker = new ComponentMaker(polyglot, IOResources);
 		this.setIcon();
-		this.buildStage();    
+		this.buildStage();
 	}
 
 	private void setIcon() {
