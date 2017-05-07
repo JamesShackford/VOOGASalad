@@ -13,12 +13,17 @@ import engine.game.LevelManager;
 import engine.graphics.GraphicsEngine;
 
 /**
- * Subclass of StepStrategy implementing step() when a Level should be
- * displayed.
+ * Subclass of StepStrategy substituting for step() (and setup()) when a Level
+ * should be displayed. Also sets up the next screen as appropriate on step()'s
+ * last iteration. See StepStrategy interfaces's Javadoc for more. NOTE: Nikita
+ * added an optimization for faster processing, but this class is mostly Matthew's
+ * code.
  * 
- * @author Matthew Barbano
+ * @author Matthew Barbano, Nikita
+ * @see StepStrategy
  *
  */
+
 public class LevelStepStrategy implements StepStrategy
 {
 	private LevelManager levelManager;
@@ -29,9 +34,11 @@ public class LevelStepStrategy implements StepStrategy
 
 	/**
 	 * Functionality executed when timeline for Screen with this
-	 * LevelStepStrategy is step up; only executed once. Called from Screen's
-	 * constructor.
-	 */
+	 * LevelStepStrategy is step up; only executed once. Assumed to be called
+	 * from Screen's constructor, when a level needs to be reinitialized (i.e.
+	 * hero dies, start a new level, etc.).
+	 */ 
+
 	@Override
 	public void setup(LevelManager levelManager, GraphicsEngine graphicsEngine, GameInfo info)
 	{
@@ -44,6 +51,10 @@ public class LevelStepStrategy implements StepStrategy
 		setupGameView();
 		addInfoToEntities();
 	}
+	
+	/**
+	 * Helper for setting up the camera.
+	 */
 
 	public void flagScreenFinished(StepStrategy nextStepStrategy)
 	{
@@ -51,19 +62,25 @@ public class LevelStepStrategy implements StepStrategy
 		this.nextStepStrategy = nextStepStrategy;
 	}
 
+	/**
+	 * Helper grouping all the observable logic in this class for setup.
+	 */
+
 	public boolean screenFinished()
 	{
 		return screenFinished;
 	}
 
 	/**
-	 * Called on every iteration of the Timeline.
+	 * Assumed to be called from TimelineManipulator to communicate to
+	 * step() to change screens, this sets 
+	 * screenFinished to true and the nextStepStrategy field to the
+	 * parameter. Need boolean flag rather than ending step() immediately
+	 * since the rest of the Actions need to finish executing for that step.
 	 * 
-	 * Note to programmer: Among other things, ticks the clock, so need at
-	 * beginning of step(), not end, because onFinished of Timeline called at
-	 * END of time elapsed.
-	 * 
+	 * @param nextStepStrategy  new StepStrategy
 	 */
+
 	@Override
 	public void step()
 	{
@@ -92,8 +109,11 @@ public class LevelStepStrategy implements StepStrategy
 	}
 
 	/**
-	 * Helper grouping all the observable logic in this class for setup.
+	 * Assumed to be called from Actions that change the screen displayed.
+	 * 
+	 * @return screenFinished
 	 */
+
 	private void addInfoToEntities()
 	{
 		info.getObservableBundle().levelObservableSetup(info);
@@ -109,6 +129,14 @@ public class LevelStepStrategy implements StepStrategy
 		}
 	}
 
+	/**
+	 * Called on every iteration of the Timeline. Sets Entites to only function 
+	 * if on camera (since some games were lagging), updates the frame in the 
+	 * graphics engine, and checks if should move on to next StepStrategy. Note: Ticks the clock, 
+	 * so need at beginning of step(), not end, because onFinished of Timeline called at
+	 * END of time elapsed. 
+	 * 
+	 */
 	private void setupGameView()
 	{
 		CameraEntity levelCamera = levelManager.getCurrentLevel().getCamera();

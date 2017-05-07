@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * For iterating over a ListSelectionGroup. Iterator Design Pattern.
  * 
  * @author Matthew Barbano
  *
