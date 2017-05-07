@@ -68,15 +68,25 @@ public abstract class AbstractMenu extends PlayerView implements Menu {
 	protected void loadFont() {
 		Font.loadFont(fontPath, 10);
 	}
-
-	public void addTiles(boolean backButton, Tile... tiles) {
+	
+	/**
+	 * Add tiles in a grid to the menu
+	 * @param backButton
+	 * @param tiles
+	 */
+	protected void addTiles(boolean backButton, Tile... tiles) {
 		for (int i = 0; i < tiles.length; i++) {
 			grid.add(tiles[i], getRow(i), getColumn(i));
 		}
 		createBackButton(backButton);
 	}
-
-	public void addSaveTiles(boolean backButton, List<Tile> tiles) {
+	
+	/**
+	 * Tiles for save states (Or anything using a list instead of an array)
+	 * @param backButton
+	 * @param tiles
+	 */
+	protected void addSaveTiles(boolean backButton, List<Tile> tiles) {
 		Tile[] tileArray = new Tile[tiles.size()];
 		tileArray = tiles.toArray(tileArray);
 		grid.getChildren().clear();
@@ -125,15 +135,25 @@ public abstract class AbstractMenu extends PlayerView implements Menu {
 		grid.getColumnConstraints().addAll(first, second);
 		setCenter(grid);
 	}
-
+	
+	/**
+	 * Creates a tile back button to add to the menu
+	 * @return
+	 */
 	protected Tile makeBackButton() {
 		return new Tile(getPolyglot().get("Back"), "gray", e -> back(stage));
 	}
-
+	
+	/**
+	 * Brings the user back to the main menu
+	 */
 	public void back(Stage stage) {
 		new MainMenu(stage, game, mediaManager, getPolyglot(), getResources());
 	}
-
+	
+	/**
+	 * Set the insets of the menu
+	 */
 	protected void setInsets() {
 		BorderPane.setMargin(getCenter(), new Insets(10, 10, 10, 10));
 	}

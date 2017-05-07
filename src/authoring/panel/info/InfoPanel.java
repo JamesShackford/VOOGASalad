@@ -7,6 +7,11 @@ import javafx.scene.web.HTMLEditor;
 import polyglot.Case;
 import utils.views.View;
 
+/**
+ * 
+ * @author Jesse
+ *
+ */
 public class InfoPanel extends View {
 	private Workspace workspace;
 	private HTMLEditor editor;
