@@ -1,6 +1,9 @@
 package authoring.command;
 
 /**
+ * Info needed to describe the position of an entity in the game authoring
+ * environment. This information can be sent over a network to communicate an
+ * the position of an entity to another client.
  * 
  * @author jimmy
  *

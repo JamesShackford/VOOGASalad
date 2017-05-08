@@ -2,11 +2,9 @@ package authoring.canvas;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -14,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
+ * An ExpandablePane has a dynamic width and height that automatically updates
+ * to the maxX, maxY, minX, and minY values of the furthest entities in it.
  * 
  * @author jimmy
  *
@@ -40,32 +40,6 @@ public class ExpandablePane extends Pane
 	public void clear()
 	{
 		setup();
-	}
-
-	/**
-	 * Set the given eventHandler to the onMouseClickedProperty of the pane
-	 * portion of the canvas.
-	 * 
-	 * @param eventHandler
-	 *            EventHandler that determines what happens when the mouse is
-	 *            clicked on the pane of the Canvas.
-	 */
-	public void setPaneOnMouseClicked(EventHandler<? super MouseEvent> eventHandler)
-	{
-		this.setOnMouseClicked(eventHandler);
-	}
-
-	/**
-	 * Set the given eventHandler to the onMouseDraggedProperty of the pane
-	 * portion of the canvas.
-	 * 
-	 * @param eventHandler
-	 *            EventHandler that determines what happens when the mouse is
-	 *            dragged on the pane of the Canvas.
-	 */
-	public void setPaneOnMouseDragged(EventHandler<? super MouseEvent> eventHandler)
-	{
-		this.setOnMouseDragged(eventHandler);
 	}
 
 	/**

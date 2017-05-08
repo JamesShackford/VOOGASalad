@@ -15,7 +15,13 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 
 /**
- * Based off the question at
+ * A ZoomablePane contains a group of Nodes that are the content of the
+ * ZoomablePane. If you scroll with the mouse wheel, then the ZoomablePane
+ * either zooms in or out of the entities within this ZoomablePane. Moreover,
+ * the content in a ZoomablePane can be panned (can move around the Pane) by
+ * dragging the mouse on the Pane itself.
+ * 
+ * Some code is borrowed from:
  * http://stackoverflow.com/questions/16680295/javafx-correct-scaling
  * http://stackoverflow.com/questions/29506156/javafx-8-zooming-relative-to-mouse-pointer
  * 

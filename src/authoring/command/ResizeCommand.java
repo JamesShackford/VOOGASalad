@@ -7,11 +7,13 @@ import utils.animation.ResizeHeightTranslation;
 import utils.animation.ResizeWidthTranslation;
 
 /**
+ * A command to resize an EntityView.
  * 
  * @author jimmy (animations by Elliott Bolzan)
  *
  */
-public class ResizeCommand extends EntityCommand {
+public class ResizeCommand extends EntityCommand
+{
 
 	double oldHeight;
 	double oldWidth;
@@ -22,7 +24,16 @@ public class ResizeCommand extends EntityCommand {
 	double newX;
 	double newY;
 
-	public ResizeCommand(EntityView entityView, ResizeInfo resizeInfo) {
+	/**
+	 * A command that will resize the given EntityView based on a given
+	 * resizeInfo. When the resize command is executed, it is animated to show
+	 * the transition from the current width/height to the new width/height.
+	 * 
+	 * @param entityView
+	 * @param moveInfo
+	 */
+	public ResizeCommand(EntityView entityView, ResizeInfo resizeInfo)
+	{
 		super(entityView);
 		this.oldHeight = resizeInfo.getOldHeight();
 		this.oldWidth = resizeInfo.getOldWidth();
@@ -35,7 +46,8 @@ public class ResizeCommand extends EntityCommand {
 	}
 
 	@Override
-	public void execute() {
+	public void execute()
+	{
 		super.getEntityView().setTranslateX(newX);
 		super.getEntityView().setTranslateY(newY);
 		animateHeight(super.getEntityView(), newHeight);
@@ -43,19 +55,22 @@ public class ResizeCommand extends EntityCommand {
 	}
 
 	@Override
-	public void unexecute() {
+	public void unexecute()
+	{
 		super.getEntityView().setTranslateX(oldX);
 		super.getEntityView().setTranslateY(oldY);
 		animateHeight(super.getEntityView(), oldHeight);
 		animateWidth(super.getEntityView(), oldWidth);
 	}
 
-	private void animateWidth(Region region, double width) {
+	private void animateWidth(Region region, double width)
+	{
 		ResizeWidthTranslation resize = new ResizeWidthTranslation(Duration.millis(300), region, width);
 		resize.play();
 	}
 
-	private void animateHeight(Region region, double height) {
+	private void animateHeight(Region region, double height)
+	{
 		ResizeHeightTranslation resize = new ResizeHeightTranslation(Duration.millis(300), region, height);
 		resize.play();
 	}

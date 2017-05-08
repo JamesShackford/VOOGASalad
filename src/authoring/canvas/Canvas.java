@@ -8,9 +8,7 @@ import engine.entities.Entity;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import utils.views.View;
@@ -56,30 +54,6 @@ public class Canvas extends View {
 	 */
 	public void clear() {
 		setup();
-	}
-
-	/**
-	 * Set the given eventHandler to the onMouseClickedProperty of the pane
-	 * portion of the canvas.
-	 * 
-	 * @param eventHandler
-	 *            EventHandler that determines what happens when the mouse is
-	 *            clicked on the pane of the Canvas.
-	 */
-	public void setPaneOnMouseClicked(EventHandler<? super MouseEvent> eventHandler) {
-		expandablePane.setOnMouseClicked(eventHandler);
-	}
-
-	/**
-	 * Set the given eventHandler to the onMouseDraggedProperty of the pane
-	 * portion of the canvas.
-	 * 
-	 * @param eventHandler
-	 *            EventHandler that determines what happens when the mouse is
-	 *            dragged on the pane of the Canvas.
-	 */
-	public void setPaneOnMouseDragged(EventHandler<? super MouseEvent> eventHandler) {
-		expandablePane.setOnMouseDragged(eventHandler);
 	}
 
 	/**

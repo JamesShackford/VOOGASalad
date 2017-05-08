@@ -1,6 +1,9 @@
 package authoring.command;
 
 /**
+ * Info needed to move an entity to the game authoring environment. This
+ * information can be sent over a network to communicate a moveCommand to
+ * another client.
  * 
  * @author jimmy
  *
