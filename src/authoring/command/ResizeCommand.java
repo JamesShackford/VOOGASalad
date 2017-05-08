@@ -9,7 +9,7 @@ import utils.animation.ResizeWidthTranslation;
 /**
  * A command to resize an EntityView.
  * 
- * @author jimmy
+ * @author jimmy (animations by Elliott Bolzan)
  *
  */
 public class ResizeCommand extends EntityCommand

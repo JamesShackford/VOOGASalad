@@ -92,6 +92,17 @@ I focused on the canvas portion of the Game Authoring environment. I added the f
 - Allow users to select multiple entities at once and drag them all around at the same time.
 - Added multiple layers and multiple level functionality
 
+
+**Michael Li**
+
+I worked on game data and the saving and loading of games.
+
+- Using the Game Class as a way for the front-end/engine to communicate with game data, I serialized the Game class into an XML file, and a folder of resource images
+- I found a way to take a folder (which would later be changed into a .vs file), and turn the xml contents and resource files into a Game object that the engine/front-end could use
+- I created mid-save functionality (i.e. saving a game while playing it), and allowed players to completely close the program, and still be able to reload these saved games
+- I utilized temp folders so that saving and unloading of games would not clutter a user's file system
+- I configured the file to use a custom file extension called .vs, unique to our program
+
 **Nikita Zemlevskiy (naz7)**
 I worked on the following parts during this project:
 - Design and implement basic backend structure for running a game
@@ -188,6 +199,8 @@ None.
 
 ### Impressions of the Assignment
 
+
+
 **Kyle Finke (kwf10)**
 
 The project was a good culmination for that class because it provided ample opportunity to apply the design concepts we learned during the course. The size of the 
@@ -211,6 +224,14 @@ The project was a great way to show off what we learned about teamwork and code 
 Through this project, us teammates learned how to evenly divide up work and place trust in each other to achieve a great final product. My favorite part of this project was trying to make the Game Authoring Environment as user-friendly as possible because it required me to forget all of my knowledge of the project and place myself in the shoes of a beginning user. It really opened my eyes to making something that's fun and intuitive to use.
 
 One change that I would make in the future is emphasizing how important the user experience is, and urging people to make their designs more user-friendly, perhaps by incorporating that into the grade.
+
+
+**Michael Li (mxl3)**
+
+The project seemed to become less so a coding project (albeit everyone still coded a lot), and more so a teamwork project. More and more importance was placed upon communication, rather than individual coding skills. My particular part of the project was not technically challenging, 
+but having to constantly change features in real time made the project in general quite challenging. The most interesting part for me, was seeing the whole project coaelesce together, and parts of the project that didn't make sense
+ individually came together quite beautifully. One thing I would change for the future is perhaps subdivide the groups (Authoring Environment, Game data, Player, Engine) differently. As a game data individual, I felt that I was not
+contributing as much as I could have, due to the small scope of the team.
 
 **Nikita Zemlevskiy (naz7)**
 

@@ -1,15 +1,12 @@
 package authoring;
 
 import java.io.File;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
-import authoring.canvas.LevelEditor;
-import authoring.command.AddInfo;
-import authoring.command.EntityListInfo;
-import authoring.command.UndoableCommand;
+import authoring.canvas.*;
+import authoring.command.*;
 import authoring.components.ComponentMaker;
 import authoring.menu.WorkspaceMenuBar;
 import authoring.networking.Networking;
@@ -20,13 +17,8 @@ import data.GameData;
 import engine.entities.Entity;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import player.launchers.BasicPlayer;
@@ -35,16 +27,21 @@ import utils.views.View;
 
 /**
  * 
- * The container for the Game Authoring Environment. Displays a SplitPane, which
- * contains the Panel and the Canvas. Serves as an intermediary between the
- * default Entities, the Panel, and the Canvas.
+ * The container for the Game Authoring Environment.
+ * 
+ * Displays a SplitPane, which contains the Panel and the Canvas. Serves as an
+ * intermediary between the default Entities, the Panel, and the Canvas.
+ * 
+ * Holds references to the Polyglot and the ResourceBundle, which can later be
+ * accessed from the views this Workspace is composed of. This is done to reduce
+ * duplicated code and retain one central reference to the essential objects for
+ * the Workspace.
  * 
  * @author Elliott Bolzan (modified by Mina Mungekar, Jimmy Shackford, Jesse
  *         Yue)
  * 
  */
-public class Workspace extends View
-{
+public class Workspace extends View {
 	private Polyglot polyglot;
 	private ResourceBundle IOResources;
 	private ComponentMaker maker;
@@ -61,10 +58,12 @@ public class Workspace extends View
 	/**
 	 * Creates the Workspace.
 	 * 
+	 * @param game
+	 *            the Game that the Workspace is initialized with.
+	 * @param polyglot
+	 *            the internationalization information.
 	 * @param IOResources
-	 *            the ResourceBundle that pertains to this Workspace.
-	 * @param path
-	 *            the path of the Game to be loaded.
+	 *            the ResourceBundle for the application.
 	 */
 	public Workspace(Game game, Polyglot polyglot, ResourceBundle IOResources) {
 		this.game = game;
@@ -81,12 +80,61 @@ public class Workspace extends View
 		return game;
 	}
 
+	/**
+	 * @return a reference to the Workspace's Networking information.
+	 */
 	public Networking getNetworking() {
 		return networking;
 	}
 
+	/**
+	 * @return the Workspace's Panel.
+	 */
 	public Panel getPanel() {
 		return panel;
+	}
+
+	/**
+	 * @return the Workspace's LeveEditor.
+	 */
+	public LevelEditor getLevelEditor() {
+		return levelEditor;
+	}
+
+	public ComponentMaker getMaker() {
+		return maker;
+	}
+
+	public Polyglot getPolyglot() {
+		return polyglot;
+	}
+
+	/**
+	 * @return the ResourceBundle for this View's descendants.
+	 */
+	public ResourceBundle getIOResources() {
+		return IOResources;
+	}
+
+	/**
+	 * @return the SplitPane governing this View.
+	 */
+	public SplitPane getPane() {
+		return pane;
+	}
+
+	/**
+	 * @return the default Entities the user has created.
+	 */
+	public DefaultEntities getDefaults() {
+		return defaults;
+	}
+
+	/**
+	 * @return the selected Entity.
+	 */
+	public Entity getSelectedEntity() {
+		return defaults.getSelectedEntity();
 	}
 
 	/**
@@ -107,9 +155,16 @@ public class Workspace extends View
 		pane.getStyleClass().add("workspace-pane");
 		setCenter(pane);
 		setTop(new WorkspaceMenuBar(this));
-		setupDragToAddEntity();
+		panel.setupDragToAddEntity();
 	}
 
+	/**
+	 * Called when a Packet is received from the Networking instance. If the
+	 * Packet is of the appropriate type, the default Entities are updated.
+	 * 
+	 * @param packet
+	 *            the Packet that was received.
+	 */
 	public void received(Packet packet) {
 		if (packet instanceof EntityListInfo) {
 			Platform.runLater(new Runnable() {
@@ -123,44 +178,21 @@ public class Workspace extends View
 		}
 	}
 
-	private void setupDragToAddEntity() {
-		panel.getEntityDisplay().getList().setOnDragDetected(e -> {
-			Entity addedEntity = panel.getEntityDisplay().getList().getSelectionModel().getSelectedItem();
-			addedEntity.setId(addedEntity.generateId());
-			Image image = new Image(addedEntity.getImagePath());
-			panel.setCursor(new ImageCursor(image, 0, 0));
-			panel.getEntityDisplay().getList().setOnMouseReleased(e2 -> {
-				Point2D canvasPoint = levelEditor.getCurrentLevel().getCanvas().getExpandablePane()
-						.screenToLocal(new Point2D(e2.getScreenX(), e2.getScreenY()));
-				Point2D workspacePoint = Workspace.this.screenToLocal(new Point2D(e2.getScreenX(), e2.getScreenY()));
-				Bounds canvasBounds = levelEditor.getCurrentLevel().getCanvas()
-						.localToScene(levelEditor.getCurrentLevel().getCanvas().getBoundsInLocal());
-				// only add entity to canvas if the mouse intersects the canvas.
-				if (canvasBounds.intersects(workspacePoint.getX(), workspacePoint.getY(), 0, 0)) {
-					AddInfo addInfo = new AddInfo(addedEntity.getName(), canvasPoint.getX(), canvasPoint.getY(),
-							getLevelEditor().getCurrentLevel().getCurrentLayer());
-					deselectAllEntities();
-					getNetworking().sendIfConnected(addInfo);
-				}
-				panel.setCursor(Cursor.DEFAULT);
-			});
-		});
-	}
-
-	private void deselectAllEntities() {
-		getLevelEditor().getCurrentLevel().getLayers().forEach(layer -> {
-			layer.getSelectedEntities().forEach(selectedEntity -> {
-				selectedEntity.setSelected(false);
-			});
-		});
-	}
-
+	/**
+	 * Execute a Command that can later be undone.
+	 * 
+	 * @param command
+	 *            the Command to be executed.
+	 */
 	public void execute(UndoableCommand command) {
 		command.execute();
 		undoStack.push(command);
 		redoStack.clear();
 	}
 
+	/**
+	 * Undo the previous Command.
+	 */
 	public void undo() {
 		if (undoStack.size() > 0) {
 			UndoableCommand undoCommand = undoStack.pop();
@@ -169,6 +201,9 @@ public class Workspace extends View
 		}
 	}
 
+	/**
+	 * Redo the previous Command.
+	 */
 	public void redo() {
 		if (redoStack.size() > 0) {
 			UndoableCommand redoCommand = redoStack.pop();
@@ -180,13 +215,17 @@ public class Workspace extends View
 	private void load() {
 		levelEditor.loadGame(game.getLevels());
 		defaults.setEntities(game.getDefaults());
-		this.selectLoadedLevel(levelEditor.getCurrentLevel().getLayerCount());
+		selectLoadedLevel(levelEditor.getCurrentLevel().getLayerCount());
 	}
 
 	/**
 	 * Save the Game to disk. A DirectoryChooser is presented to the user; the
 	 * Game's construction is finalized; and a call to GameData is made to save
 	 * the Game.
+	 * 
+	 * This implementation is delegated to an overloaded, save(String title),
+	 * method. This method presents a TextInputDialog, and only calls
+	 * save(String title) if input is provided by the user.
 	 */
 	public void save() {
 		TextInputDialog dialog = maker.makeTextInputDialog("SaveTitle", "SaveHeader", "SaveLabel", game.getName());
@@ -240,64 +279,6 @@ public class Workspace extends View
 		game.setDefaults(defaults.getEntities());
 	}
 
-	public ComponentMaker getMaker() {
-		return maker;
-	}
-
-	public Polyglot getPolyglot() {
-		return polyglot;
-	}
-
-	/**
-	 * @return the ResourceBundle for this View's descendants.
-	 */
-	public ResourceBundle getIOResources() {
-		return IOResources;
-	}
-
-	/**
-	 * @return the SplitPane governing this View.
-	 */
-	public SplitPane getPane() {
-		return pane;
-	}
-
-	/**
-	 * @return the default Entities the user has created.
-	 */
-	public DefaultEntities getDefaults() {
-		return defaults;
-	}
-
-	/**
-	 * @return the selected Entity.
-	 */
-	public Entity getSelectedEntity() {
-		return defaults.getSelectedEntity();
-	}
-
-	/**
-	 * addLayer is called from the panel whenever the user selects the option to
-	 * add another layer. The workspace instructs the levelEditor to create
-	 * another layer.
-	 * 
-	 */
-	public void addLayer() {
-		levelEditor.getCurrentLevel().newLayer();
-	}
-
-	/**
-	 * When the user selects a new layer from the layer-selecting ComboBox, it
-	 * alerts the workspace, which, in turn, instructs the LevelEditor to switch
-	 * layers.
-	 * 
-	 * @param number
-	 *            the layer's identifier.
-	 */
-	public void selectLayer(int number) {
-		levelEditor.getCurrentLevel().selectLayer(number);
-	}
-
 	/**
 	 * When a new level is selected by the user, the LevelEditor alerts the
 	 * workspace, which, in turn, alerts the panel to the change being made. The
@@ -307,32 +288,18 @@ public class Workspace extends View
 	 *            the number of the new level.
 	 */
 	public void selectExistingLevel(String oldLevel, String newLevel) {
-		panel.selectExistingLevelBox(oldLevel, newLevel);
-	}
-
-	public void selectLoadedLevel(List<String> nameList) {
-		panel.selectLoadedLevelBox(nameList);
-	}
-
-	public void selectLoadedLevel(int layerCount) {
-		panel.selectLoadedLevelBox(layerCount);
-	}
-
-	public LevelEditor getLevelEditor() {
-		return levelEditor;
+		panel.selectExistingLevel(oldLevel, newLevel);
 	}
 
 	/**
-	 * When the user instructs the layer panel to delete a layer, the workspace
-	 * alerts the levelEditor, telling it to delete a layer of its current
-	 * level.
+	 * Selects a Level that is already loaded, referencing by its number.
 	 * 
-	 * @param layer
-	 *            the identifier of the layer to be deleted.
+	 * @param layerCount
 	 */
-	public void deleteLayer(int layer) {
-		levelEditor.getCurrentLevel().deleteLayer(layer);
+	public void selectLoadedLevel(int number) {
+		panel.selectLoadedLevel(number);
 	}
+
 
 	/**
 	 * Update Entities on the Canvas when their default was edited by the user.
@@ -340,8 +307,7 @@ public class Workspace extends View
 	 * @param entity
 	 *            the Entity to replace the old Entities with.
 	 */
-	public void updateEntity(Entity entity)
-	{
+	public void updateEntity(Entity entity) {
 		levelEditor.updateEntity(entity);
 	}
 

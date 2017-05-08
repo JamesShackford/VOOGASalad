@@ -163,25 +163,12 @@ public class LevelEditor extends View {
 
 	public void sendToFront() {
 		for (Layer layer : currentLevel.getLayers()) {
-			/*
-			 * List<EntityView> selected = layer.getSelectedEntities();
-			 * layer.getEntities().removeAll(selected);
-			 * System.out.println(selected.toString());
-			 * layer.getEntities().addAll(0, selected);
-			 */
 			layer.getSelectedEntities().forEach(entity -> entity.toFront());
 		}
 	}
 
 	public void sendToBack() {
 		for (Layer layer : currentLevel.getLayers()) {
-			/*
-			 * List<EntityView> selected = layer.getSelectedEntities();
-			 * layer.getEntities().removeAll(selected);
-			 * System.out.println(selected.toString());
-			 * layer.getEntities().addAll(layer.getEntities().size() - 1,
-			 * selected);
-			 */
 			layer.getSelectedEntities().forEach(entity -> entity.toBack());
 		}
 	}

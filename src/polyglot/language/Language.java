@@ -5,16 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 
+ * This class is a wrapper for one language's vocabulary.
+ * 
+ * As convenience, it provides get(String key), List<String> keys(), and
+ * List<String> values() methods.
+ * 
+ * This design is necessary to remove clutter from LanguageManager. If it were
+ * not used, LanguageManager would need to contain a Map of Maps, which would
+ * not be very legible or conceptually clear.
+ * 
  * @author Elliott Bolzan
- *
- *         This class is a wrapper for one language's vocabulary.
- * 
- *         As convenience, it provides get(String key), List<String> keys(), and
- *         List<String> values() methods.
- * 
- *         This design is necessary to remove clutter from LanguageManager. If
- *         it were not used, LanguageManager would need to contain a Map of
- *         Maps, which would not be very legible or conceptually clear.
  *
  */
 public class Language {

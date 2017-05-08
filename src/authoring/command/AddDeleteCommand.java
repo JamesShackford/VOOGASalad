@@ -10,11 +10,10 @@ import javafx.util.Duration;
 /**
  * A command to add or delete an EntityView from the LevelEditor.
  * 
- * @author jimmy
+ * @author jimmy (animations by Elliott Bolzan)
  *
  */
-public class AddDeleteCommand extends EntityCommand
-{
+public class AddDeleteCommand extends EntityCommand {
 
 	private LevelEditor levels;
 	private boolean add;
@@ -39,19 +38,16 @@ public class AddDeleteCommand extends EntityCommand
 	}
 
 	@Override
-	public void execute()
-	{
+	public void execute() {
 		addOrRemove(add);
 	}
 
 	@Override
-	public void unexecute()
-	{
+	public void unexecute() {
 		addOrRemove(!add);
 	}
 
-	private void addOrRemove(boolean add)
-	{
+	private void addOrRemove(boolean add) {
 		EntityView entityView = super.getEntityView();
 		if (add && levels.getEntity(entityView.getEntityId()) == null) {
 			add(entityView);
@@ -60,16 +56,14 @@ public class AddDeleteCommand extends EntityCommand
 		}
 	}
 
-	private void add(EntityView entityView)
-	{
+	private void add(EntityView entityView) {
 		entityView.setOpacity(0);
 		levels.getCurrentLevel().addEntity(entityView, (int) entityView.getEntity().getZ());
 		animate(entityView, 0, 1);
 		entityView.setSelected(true);
 	}
 
-	private void remove(EntityView entityView)
-	{
+	private void remove(EntityView entityView) {
 		FadeTransition ft = animate(entityView, 1, 0);
 		ft.setOnFinished(event -> {
 			Layer addedLayer = levels.getCurrentLevel().getLayers().get((int) entityView.getEntity().getZ() - 1);
@@ -80,8 +74,7 @@ public class AddDeleteCommand extends EntityCommand
 		});
 	}
 
-	private FadeTransition animate(Node node, double from, double to)
-	{
+	private FadeTransition animate(Node node, double from, double to) {
 		FadeTransition ft = new FadeTransition(Duration.millis(300), node);
 		ft.setFromValue(from);
 		ft.setToValue(to);

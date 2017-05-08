@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import data.Game;
 import data.GameData;
+import exceptions.InvalidGameException;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -56,8 +57,7 @@ public class LoadMenu extends AbstractMenu {
 			MediaManager mediaManager = new MediaManager(game, this.getMediaManager().getGamePath());
 			new FullPlayer(stage, game, mediaManager, this.getPolyglot(), this.getResources(), false);
 		} catch (Exception e) {
-			// Game couldn't be loaded, perhaps a wrong Game selected. Might
-			// want to tell user!
+			new InvalidGameException();
 		}
 	}
 

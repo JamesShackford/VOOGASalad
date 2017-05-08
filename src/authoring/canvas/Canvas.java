@@ -24,8 +24,7 @@ import utils.views.View;
  * @author jimmy
  *
  */
-public class Canvas extends View
-{
+public class Canvas extends View {
 	public static final int TILE_SIZE = 25;
 
 	private List<EntityView> entities;
@@ -36,28 +35,24 @@ public class Canvas extends View
 	private ZoomablePane zoomablePane;
 	private ExpandablePane expandablePane;
 
-	public Canvas(Workspace workspace)
-	{
+	public Canvas(Workspace workspace) {
 		super(workspace.getPolyglot().get("CanvasTitle"));
 		this.workspace = workspace;
 		setup();
 	}
 
-	public ExpandablePane getExpandablePane()
-	{
+	public ExpandablePane getExpandablePane() {
 		return expandablePane;
 	}
 
-	public ZoomablePane getZoomablePane()
-	{
+	public ZoomablePane getZoomablePane() {
 		return zoomablePane;
 	}
 
 	/**
 	 * Remove all of the entities from within the canvas.
 	 */
-	public void clear()
-	{
+	public void clear() {
 		setup();
 	}
 
@@ -65,8 +60,7 @@ public class Canvas extends View
 	 * Set up the canvas (set all of its entities and displays to the default
 	 * ones).
 	 */
-	private void setup()
-	{
+	private void setup() {
 		entities = new ArrayList<EntityView>();
 		entityList = FXCollections.observableList(new ArrayList<EntityView>(entities));
 		setupZoomExpandPane();
@@ -77,8 +71,7 @@ public class Canvas extends View
 		this.setCenter(zoomablePane);
 	}
 
-	private void setupZoomExpandPane()
-	{
+	private void setupZoomExpandPane() {
 		final Group group = new Group();
 		expandablePane = new ExpandablePane();
 		group.getChildren().add(expandablePane);
@@ -90,13 +83,11 @@ public class Canvas extends View
 	 * 
 	 * @return canvas tile size.
 	 */
-	public int getTileSize()
-	{
+	public int getTileSize() {
 		return TILE_SIZE;
 	}
 
-	public List<EntityView> getSelectedEntities()
-	{
+	public List<EntityView> getSelectedEntities() {
 		List<EntityView> selected = new ArrayList<EntityView>();
 		entities.forEach(e -> {
 			if (e.isSelected()) {
@@ -115,8 +106,7 @@ public class Canvas extends View
 	 *            Entity to be added to the canvas.
 	 * @return EntityView that is displayed in the Canvas.
 	 */
-	public EntityView addEntity(Entity entity)
-	{
+	public EntityView addEntity(Entity entity) {
 		return this.addEntity(entity, 0, 0);
 	}
 
@@ -133,8 +123,7 @@ public class Canvas extends View
 	 *            y position
 	 * @return EntityView that is displayed in the Canvas.
 	 */
-	public EntityView addEntity(Entity entity, double x, double y)
-	{
+	public EntityView addEntity(Entity entity, double x, double y) {
 		EntityView newEntity = new EntityView(entity, this, TILE_SIZE, x, y);
 		newEntity.setTranslateX(GridUtil.getTiledCoordinate(x, TILE_SIZE));
 		newEntity.setTranslateY(GridUtil.getTiledCoordinate(y, TILE_SIZE));
@@ -143,8 +132,7 @@ public class Canvas extends View
 		return newEntity;
 	}
 
-	public void addEntityView(EntityView entity)
-	{
+	public void addEntityView(EntityView entity) {
 		entities.add(entity);
 		entityList.add(entity);
 		expandablePane.addEntity(entity, entity.getTranslateX(), entity.getTranslateY());
@@ -156,19 +144,16 @@ public class Canvas extends View
 	 * @param entity
 	 *            EntityView to be removed from the Canvas.
 	 */
-	public void removeEntity(EntityView entity)
-	{
+	public void removeEntity(EntityView entity) {
 		entities.remove(entity);
 		expandablePane.getChildren().remove(entity);
 	}
 
-	public Workspace getWorkspace()
-	{
+	public Workspace getWorkspace() {
 		return workspace;
 	}
 
-	public void addEntityListener(Runnable r)
-	{
+	public void addEntityListener(Runnable r) {
 		entityList.addListener((ListChangeListener.Change<? extends EntityView> c) -> {
 			r.run();
 		});

@@ -7,7 +7,7 @@ import javafx.util.Duration;
 /**
  * A command to move an EntityView.
  * 
- * @author jimmy
+ * @author jimmy (animations by Elliott Bolzan)
  *
  */
 public class MoveCommand extends EntityCommand

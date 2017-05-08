@@ -21,10 +21,19 @@ import javafx.scene.web.WebView;
 import utils.views.View;
 
 /**
- * @author Elliott Bolzan
  * 
- *         Click detection in JavaFX WebView adapted from:
- *         http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/#.WP97vFKZNmA.
+ * The class that displays received messages. The messages are displayed using
+ * HTML, for modularity's sake. On the reception of each new message, HTML is
+ * created. This HTML is styled by a CSS file.
+ * 
+ * Certain patterns in the HTML (like <mark>) are recognized by the class, which
+ * receives notifications when the user clicks on them. This allows for the
+ * creation of hyperlink references to Entities.
+ * 
+ * Click detection in JavaFX WebView adapted from:
+ * http://blogs.kiyut.com/tonny/2013/07/30/javafx-webview-addhyperlinklistener/#.WP97vFKZNmA.
+ * 
+ * @author Elliott Bolzan
  *
  */
 public class Log extends View {
@@ -42,7 +51,12 @@ public class Log extends View {
 	private ChangeListener<State> listener;
 
 	/**
+	 * Creates a Log.
 	 * 
+	 * @param workspace
+	 *            the Workspace that owns the Log.
+	 * @param username
+	 *            the machine's current username.
 	 */
 	public Log(Workspace workspace, String username) {
 		this.workspace = workspace;
@@ -59,6 +73,14 @@ public class Log extends View {
 		browser.getEngine().setUserStyleSheetLocation(file.toURI().toString());
 	}
 
+	/**
+	 * Append a Message to the log. The message is appended as a new
+	 * <li>object in the HTML. The username and actual message are appended as
+	 * different HTML elements, to allow for them to be styled differently.
+	 * 
+	 * @param message
+	 *            the Message to be appended.
+	 */
 	public void append(Message message) {
 		String outer = message.getUsername().equals(username) ? SELF_CLASS : OTHER_CLASS;
 		String original = "<li class=\"" + outer + "\"><div class=\"" + MESSAGE_CLASS + "\">" + message.getMessage()
@@ -121,8 +143,8 @@ public class Log extends View {
 		html.append("   </script>");
 		html.append("</head>");
 		html.append("<body onload='toBottom()'>");
-		html.append(
-				"<center><div class=\"intro\">" + workspace.getPolyglot().get("ChatInstructions").get() + "</div></center>");
+		html.append("<center><div class=\"intro\">" + workspace.getPolyglot().get("ChatInstructions").get()
+				+ "</div></center>");
 		html.append("<ol>");
 		html.append(chatLog);
 		html.append("</ol>");

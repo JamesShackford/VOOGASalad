@@ -26,7 +26,14 @@ public class TimerManager {
 	private int initialMilliseconds;
 	private int milliseconds;
 	private TickStrategy tickStrategy;
-
+	
+	/**
+	 * Instantiates the TimerManager to match the parameters specified,
+	 * setting tickUp or tickDown in accord with the Strategy Design Pattern.
+	 * 
+	 * @param totalSeconds
+	 * @param tickDown
+	 */
 	public TimerManager(double totalSeconds, boolean tickDown) {
 		initialMilliseconds = (int) (totalSeconds * 1000);
 		milliseconds = initialMilliseconds;
@@ -36,23 +43,41 @@ public class TimerManager {
 			tickStrategy = new TickUp();
 		}
 	}
-
+	
+	/**
+	 * Sets to initial
+	 */
 	public void reset() {
 		milliseconds = initialMilliseconds;
 	}
-
+	
+	/**
+	 * Returns the number of milliseconds
+	 * @return
+	 */
 	public int getMilliseconds() {
 		return milliseconds;
 	}
-
+	
+	/**
+	 * Ticks according to the substituted TickStrategy
+	 */
 	public void tick() {
 		milliseconds = tickStrategy.tick(milliseconds);
 	}
-
+	
+	/**
+	 * Returns whether time is up for tick down (always false for tick up).
+	 * @return
+	 */
 	public boolean timeIsUp() {
 		return tickStrategy.timeIsUp(milliseconds);
 	}
-
+	
+	/**
+	 * Increments time by the argument
+	 * @param millisecondsIncrement
+	 */
 	public void incrementTime(int millisecondsIncrement) {
 		milliseconds += millisecondsIncrement;
 	}
