@@ -28,29 +28,47 @@ import networking.net.ObservableServer;
 import networking.net.SocketConnection;
 
 /**
+ * 
+ * This class serves as the integration of another team's networking utility
+ * with our project.
+ * 
+ * All connections are started on port 1337, to minimize the configuration a
+ * user has to do. The only information a user has to input is the server IP
+ * address, when joing a different server.
+ * 
+ * It provides four public methods: start(), which starts a server, join(),
+ * which joins a server, showIP(), which displays the IP address to the user,
+ * and send(Packet packet), which sends a Packet over the network.
+ * 
  * @author Elliott Bolzan
  *
  */
-public class Networking implements ConnectionObserver
-{
+public class Networking implements ConnectionObserver {
 
 	private Workspace workspace;
 	private ObservableServer<Packet> server;
 	private ObservableClient<Packet> client;
 	private static final int PORT = 1337;
 
-	public Networking(Workspace workspace)
-	{
+	/**
+	 * Creates a Networking instance.
+	 * 
+	 * @param workspace
+	 *            the Workspace that owns this instance.
+	 */
+	public Networking(Workspace workspace) {
 		this.workspace = workspace;
 	}
 
-	public void start()
-	{
-		Task<Void> task = new Task<Void>()
-		{
+	/**
+	 * Starts a server connection using a Task. This Task is passed to a
+	 * ProgressDialog, which runs the Task on a separate thread and displays a
+	 * ProgressBar to the user.
+	 */
+	public void start() {
+		Task<Void> task = new Task<Void>() {
 			@Override
-			public Void call() throws InterruptedException
-			{
+			public Void call() throws InterruptedException {
 				startHelper();
 				return null;
 			}
@@ -59,8 +77,7 @@ public class Networking implements ConnectionObserver
 	}
 
 	@SuppressWarnings("unchecked")
-	private void startHelper() throws InterruptedException
-	{
+	private void startHelper() throws InterruptedException {
 		try {
 			server = new ObservableServer<Packet>(null, PORT, Serializer.NONE, Unserializer.NONE, Duration.ofSeconds(5),
 					this);
@@ -71,15 +88,20 @@ public class Networking implements ConnectionObserver
 		}
 	}
 
-	public void join()
-	{
+	/**
+	 * Joins a server created on a different machine. To obtain the IP address
+	 * for the server, a TextInputDialog is shown to the user (called using
+	 * askForIP()).
+	 * 
+	 * If the user provides a response, a Task encapsulating the joining process
+	 * is run on a separate thread, while the user is shown a ProgressDialog.
+	 */
+	public void join() {
 		Optional<String> IP = askForIP();
 		if (IP.isPresent()) {
-			Task<Void> task = new Task<Void>()
-			{
+			Task<Void> task = new Task<Void>() {
 				@Override
-				public Void call() throws InterruptedException
-				{
+				public Void call() throws InterruptedException {
 					join(IP.get());
 					return null;
 				}
@@ -89,8 +111,7 @@ public class Networking implements ConnectionObserver
 	}
 
 	@SuppressWarnings("unchecked")
-	private void join(String IP) throws InterruptedException
-	{
+	private void join(String IP) throws InterruptedException {
 		try {
 			client = new ObservableClient<>(IP, PORT, Serializer.NONE, Unserializer.NONE, Duration.ofSeconds(5));
 			client.addListener(client -> received(client));
@@ -100,19 +121,18 @@ public class Networking implements ConnectionObserver
 		}
 	}
 
-	public void showIP()
-	{
-		Task<Void> task = new Task<Void>()
-		{
+	/**
+	 * Shows the IP address for the current machine. Runs the operation on a
+	 * separate thread, and uses an Alert to inform the user of his or her IP.
+	 */
+	public void showIP() {
+		Task<Void> task = new Task<Void>() {
 			@Override
-			public Void call() throws InterruptedException
-			{
+			public Void call() throws InterruptedException {
 				String IP = getIP();
-				Platform.runLater(new Runnable()
-				{
+				Platform.runLater(new Runnable() {
 					@Override
-					public void run()
-					{
+					public void run() {
 						Alert alert = workspace.getMaker().makeAlert(AlertType.INFORMATION, "IPTitle", "IPHeader",
 								workspace.getPolyglot().get("IPContent").get() + " " + IP + ".");
 						alert.show();
@@ -124,8 +144,7 @@ public class Networking implements ConnectionObserver
 		workspace.getMaker().showProgressForTask(task, false);
 	}
 
-	private String getIP()
-	{
+	private String getIP() {
 		try {
 			return InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e) {
@@ -133,21 +152,25 @@ public class Networking implements ConnectionObserver
 		}
 	}
 
-	public void close()
-	{
+	/**
+	 * Closes the connections opened on this machine.
+	 */
+	public void close() {
 		if (server != null && server.isActive())
 			server.close();
 		if (client != null && client.isActive())
 			client.close();
 	}
 
-	public boolean isConnected()
-	{
+	/**
+	 * @return a Boolean indicating whether the machine is connected to another
+	 *         machine.
+	 */
+	public boolean isConnected() {
 		return client != null && client.isActive() || server != null && server.isActive();
 	}
 
-	public void send(Packet packet)
-	{
+	public void send(Packet packet) {
 		client.addToOutbox(state -> packet);
 	}
 
@@ -156,9 +179,9 @@ public class Networking implements ConnectionObserver
 	 * connected, then receives the packet immediately.
 	 * 
 	 * @param packet
+	 *            the Packet to be sent.
 	 */
-	public void sendIfConnected(Packet packet)
-	{
+	public void sendIfConnected(Packet packet) {
 		if (isConnected()) {
 			this.send(packet);
 		} else {
@@ -166,8 +189,7 @@ public class Networking implements ConnectionObserver
 		}
 	}
 
-	private void received(Packet packet)
-	{
+	private void received(Packet packet) {
 		if (packet != null) {
 			if (packet instanceof Message) {
 				workspace.getPanel().getChat().received(packet);
@@ -179,15 +201,13 @@ public class Networking implements ConnectionObserver
 		}
 	}
 
-	private Optional<String> askForIP()
-	{
+	private Optional<String> askForIP() {
 		TextInputDialog dialog = workspace.getMaker().makeTextInputDialog("JoinTitle", "JoinHeader", "JoinPrompt", "");
 		return dialog.showAndWait();
 	}
 
 	@Override
-	public void newConnection(SocketConnection connection)
-	{
+	public void newConnection(SocketConnection connection) {
 		if (server != null && server.isActive()) {
 			List<? extends Entity> addedEntityList = workspace.getDefaults().getEntities();
 			EntityListInfo currentEntities = new EntityListInfo(addedEntityList);
@@ -202,8 +222,7 @@ public class Networking implements ConnectionObserver
 			List<Packet> startingState = new ArrayList<Packet>();
 			startingState.add(currentEntities);
 			startingState.add(multiAdd);
-			MultiEntityInfo<Packet> startingConfig = new MultiEntityInfo<Packet>(startingState);
-			this.send(startingConfig);
+			send(new MultiEntityInfo<Packet>(startingState));
 		}
 	}
 

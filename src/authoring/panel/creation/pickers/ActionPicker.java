@@ -16,11 +16,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 
 /**
+ * 
+ * This class lets the user view, edit, delete, and select Actions he or she has
+ * created. It extends Picker, a superclass which provides its editing and
+ * deleting abilities.
+ * 
  * @author Elliott Bolzan
- *
- *         This class lets the user view, edit, delete, and select Actions he or
- *         she has created. It extends Picker, a superclass which provides its
- *         editing and deleting abilities.
  *
  */
 public class ActionPicker extends Picker {
@@ -184,12 +185,6 @@ public class ActionPicker extends Picker {
 
 	public ActionEditor getEditor() {
 		return editor;
-	}
-
-	@Override
-	public void setContainerPos() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

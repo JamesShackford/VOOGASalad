@@ -15,15 +15,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import polyglot.Case;
 
 /**
+ * This class manages polyglot's state concerning languages.
+ * 
+ * It holds references to: a Map of languages that have been translated into;
+ * the default Locale; the original Language supplied by the user; and a tool
+ * for converting between language codes and their display names.
+ * 
  * @author Elliott Bolzan
  *
- *
- *         This class manages polyglot's state concerning languages.
- * 
- *         It holds references to: a Map of languages that have been translated
- *         into; the default Locale; the original Language supplied by the user;
- *         and a tool for converting between language codes and their display
- *         names.
  */
 public class LanguageManager {
 

@@ -9,12 +9,13 @@ import engine.events.Event;
 import engine.game.EngineController;
 
 /**
+ * 
+ * An extension of Editor, specifically design to edit Events. Allows the user
+ * to consult and set values for a list of parameters for each Event. Gives the
+ * user the option to save his or her progress in creating an Event.
+ * 
  * @author Elliott Bolzan
  *
- *         An extension of Editor, specifically design to edit Events. Allows
- *         the user to consult and set values for a list of parameters for each
- *         Event. Gives the user the option to save his or her progress in
- *         creating an Event.
  */
 public class EventEditor extends Editor {
 

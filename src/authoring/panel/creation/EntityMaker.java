@@ -17,11 +17,13 @@ import javafx.stage.Stage;
 import utils.views.View;
 
 /**
+ * 
+ * This class is displayed when an Entity is being created or edited. It serves
+ * as a wrapper for four main parts: the EntityInfo, the EntityEditor, the
+ * EventPicker, and the ActionPicker.
+ * 
  * @author Elliott Bolzan
  * 
- *         This class is displayed when an Entity is being created or edited. It
- *         serves as a wrapper for four main parts: the EntityInfo, the
- *         EntityEditor, the EventPicker, and the ActionPicker.
  */
 public class EntityMaker extends View {
 
@@ -37,7 +39,7 @@ public class EntityMaker extends View {
 	private ActionPicker actionPicker;
 
 	private Event selectedEvent;
-	
+
 	/**
 	 * Creates an EntityMaker.
 	 * 
@@ -64,6 +66,42 @@ public class EntityMaker extends View {
 	 */
 	public Entity getEntity() {
 		return entityEditor.getEntity();
+	}
+
+	/**
+	 * @return the EventPicker.
+	 */
+	public EventPicker getEventPicker() {
+		return eventPicker;
+	}
+
+	/**
+	 * @return the ActionPicker.
+	 */
+	public ActionPicker getActionPicker() {
+		return actionPicker;
+	}
+
+	/**
+	 * Change the EntityInfo's save button's interaction information for the
+	 * tutorial.
+	 * 
+	 * @param r
+	 *            the new Runnable to be run for the EntityInfo's save button.
+	 */
+	public void changeSaveHandler(Runnable r) {
+		entityInfo.changeSaveHandler(r);
+	}
+
+	/**
+	 * Change the EntityInfo's image picker's interaction information for the
+	 * tutorial.
+	 * 
+	 * @param r
+	 *            the new Runnable to be run for the image picker.
+	 */
+	public void changeImageHandler(Runnable r) {
+		entityInfo.changeImageHandler(r);
 	}
 
 	private void setupView(Entity entity) {
@@ -148,27 +186,6 @@ public class EntityMaker extends View {
 		getEntity().heightProperty().set(entityInfo.getImageHeight());
 		display.addEntity(getEntity());
 		dismiss();
-	}
-
-	public void setStagePos(double x, double y) {
-		stage.setX(x);
-		stage.setY(y);
-	}
-
-	public EventPicker getEventPicker() {
-		return eventPicker;
-	}
-
-	public ActionPicker getActionPicker() {
-		return actionPicker;
-	}
-
-	public void changeSaveHandler(Runnable r) {
-		entityInfo.changeSaveHandler(r);
-	}
-
-	public void changeImageHandler(Runnable r) {
-		entityInfo.changeImageHandler(r);
 	}
 
 }

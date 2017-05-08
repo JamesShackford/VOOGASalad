@@ -82,27 +82,45 @@ public class GameLoop {
 	public void pauseTimeline() {
 		levelManager.getCurrentScreen().pause();
 	}
-
+	
+	/**
+	 * @return game view from graphics engine
+	 */
 	public Pane getGameView() {
 		return graphicsEngine.getView();
 	}
-
+	
+	/**
+	 * @return ObservableBundle
+	 */
 	public ObservableBundle getObservableBundle() {
 		return observableBundle;
 	}
-
+	
+	/**
+	 * @return scorebar for current game
+	 */
 	public Scorebar getScorebar() {
 		return scorebar;
 	}
-
+	
+	/**
+	 * @return timelineManipulator for current game (helper class)
+	 */
 	public TimelineManipulator timelineManipulator() {
 		return timelineManipulator;
 	}
-
+	
+	/**
+	 * @return levelManager for current game
+	 */
 	public LevelManager getLevelManager() {
 		return levelManager;
 	}
-
+	
+	/**
+	 * @return graphicsEngine for current game
+	 */
 	public GraphicsEngine getGraphicsEngine() {
 		return graphicsEngine;
 	}

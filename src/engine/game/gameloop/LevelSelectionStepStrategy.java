@@ -16,11 +16,19 @@ public class LevelSelectionStepStrategy implements StepStrategy {
 	private GraphicsEngine graphicsEngine;
 	private GameInfo info;
 	private boolean firstPass;
-
+	
+	/**
+	 * Instantiates with firstPass set to parameter.
+	 * @param firstPass
+	 */
 	public LevelSelectionStepStrategy(boolean firstPass) {
 		this.firstPass = firstPass;
 	}
-
+	
+	/**
+	 * Sets up the field, displays level selection screen, and blanks the scorebar
+	 * if firstPass is true.
+	 */
 	@Override
 	public void setup(LevelManager levelManager, GraphicsEngine graphicsEngine, GameInfo info) {
 		this.levelManager = levelManager;
@@ -29,11 +37,18 @@ public class LevelSelectionStepStrategy implements StepStrategy {
 		graphicsEngine.displayLevelSelectionScreen(levelManager, this);
 		graphicsEngine.blankScorebar(firstPass);
 	}
-
+	
+	/**
+	 * Does nothing (Null Object Design Pattern).
+	 */
 	@Override
 	public void step() {
 	}
-
+	
+	/**
+	 * Progresses to the selected next level.
+	 * @param levelNumber
+	 */
 	public void moveToLevelScreen(int levelNumber) {
 		levelManager.getCurrentScreen().getTimeline().stop();
 		boolean hasSelectedLevel = levelManager.setLevelNumber(levelNumber);

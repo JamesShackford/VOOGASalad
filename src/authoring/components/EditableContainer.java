@@ -15,8 +15,8 @@ import utils.views.View;
 
 /**
  * @author Elliott Bolzan
- * (modified by Mina Mungekar)
- *
+ * Modified by Mina Mungekar
+ * 
  *         A superclass for all Views that: provide a list-style container
  *         (ListView or TableView), require editing functionality, deletion
  *         functionality, and addition functionality. Because this requirement
@@ -41,16 +41,29 @@ public abstract class EditableContainer extends View {
 	public EditableContainer(Workspace workspace, String titleProperty) {
 		super(workspace.getPolyglot().get(titleProperty, Case.TITLE));
 		this.workspace = workspace;
-		setup();
-	}
-
-	private void setup() {
 		createContainer();
 		createButtons();
 	}
 
 	protected Workspace getWorkspace() {
 		return workspace;
+	}
+
+	/**
+	 * Set the Object that is currently being edited.
+	 * 
+	 * @param currentlyEditing
+	 *            the object that is currently being edited.
+	 */
+	public void setCurrentlyEditing(Object currentlyEditing) {
+		this.currentlyEditing = currentlyEditing;
+	}
+
+	/**
+	 * @return the Object that is currently being edited.
+	 */
+	public Object getCurrentlyEditing() {
+		return currentlyEditing;
 	}
 
 	private void createButtons() {
@@ -64,17 +77,20 @@ public abstract class EditableContainer extends View {
 	}
 
 	/**
-	 * Add tooltips to display text when the mouse hovers over the buttons. The
+	 * Add tool tips to display text when the mouse hovers over the buttons. The
 	 * text will vary based on the context the editable container is used in.
 	 * 
-	 * @param s1
-	 * @param s2
-	 * @param s3
+	 * @param newTooltip
+	 *            the text displayed when the user hovers over the "New" button.
+	 * @param editTooltip
+	 *            the text displayed when the user hovers the "Edit" button.
+	 * @param deleteTooltip
+	 *            the text displayed when the user hovers the "Delete" button.
 	 */
-	public void addTooltips(StringBinding s1, StringBinding s2, StringBinding s3) {
-		new CustomTooltip(s1, newButton);
-		new CustomTooltip(s2, editButton);
-		new CustomTooltip(s3, deleteButton);
+	public void addTooltips(StringBinding newTooltip, StringBinding editTooltip, StringBinding deleteTooltip) {
+		new CustomTooltip(newTooltip, newButton);
+		new CustomTooltip(editTooltip, editButton);
+		new CustomTooltip(deleteTooltip, deleteButton);
 	}
 
 	/**
@@ -92,23 +108,6 @@ public abstract class EditableContainer extends View {
 			alert.show();
 		}
 		return object != null;
-	}
-
-	/**
-	 * Set the Object that is currently being edited.
-	 * 
-	 * @param currentlyEditing
-	 *            the object that is currently being edited.
-	 */
-	public void setCurrentlyEditing(Object currentlyEditing) {
-		this.currentlyEditing = currentlyEditing;
-	}
-
-	/**
-	 * @return the Objec that is currently being edited.
-	 */
-	public Object getCurrentlyEditing() {
-		return currentlyEditing;
 	}
 
 	/**
@@ -136,31 +135,35 @@ public abstract class EditableContainer extends View {
 			}
 		});
 	}
-	
+
 	/**
-	 * Changes the event handler of the Edit button (for the tutorial)
-	 * The button click also must trigger the Runnable r to instruct the tutorial
+	 * Changes the event handler of the Edit button (for the tutorial) The
+	 * button click also must trigger the Runnable r to instruct the tutorial
 	 * guide to display a new instruction.
+	 * 
 	 * @param r
 	 */
-	public void changeEditHandler(Runnable r){
-		editButton.setOnAction(e -> {edit();
-									setContainerPos();
-									r.run();
-									editButton.setOnAction(event->edit());
+	public void changeEditHandler(Runnable r) {
+		editButton.setOnAction(e -> {
+			edit();
+			r.run();
+			editButton.setOnAction(event -> edit());
 		});
 	}
+
 	/**
-	 * Changes the event handler of the New button (for the tutorial)
-	 * The button click also must trigger the Runnable r to instruct the tutorial
+	 * Changes the event handler of the New button (for the tutorial). The
+	 * button click also must trigger the Runnable r to instruct the tutorial
 	 * guide to display a new instruction.
+	 * 
 	 * @param r
+	 *            the Runnable that is to update the tutorial.
 	 */
-	public void changeNewHandler(Runnable r){
-		newButton.setOnAction(e -> {createNew();
-									setContainerPos();
-									r.run();
-									newButton.setOnAction(event->createNew());
+	public void changeNewHandler(Runnable r) {
+		newButton.setOnAction(e -> {
+			createNew();
+			r.run();
+			editButton.setOnAction(event -> createNew());
 		});
 	}
 
@@ -184,7 +187,5 @@ public abstract class EditableContainer extends View {
 	 * Delete an element in the container.
 	 */
 	public abstract void delete();
-	
-	public abstract void setContainerPos();
 
 }

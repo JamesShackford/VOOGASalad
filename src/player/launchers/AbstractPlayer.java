@@ -8,7 +8,6 @@ import engine.game.gameloop.Scorebar;
 import engine.graphics.GraphicsEngine;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import player.PlayerView;

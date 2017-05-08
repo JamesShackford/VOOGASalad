@@ -4,13 +4,19 @@ import authoring.Workspace;
 import javafx.scene.control.MenuItem;
 
 /**
+ * This subclass of WorkspaceMenu represents a Game menu. The user is given the
+ * following options: saving a game and testing a game.
+ * 
  * @author Elliott Bolzan
  *
  */
 public class GameMenu extends WorkspaceMenu {
 
 	/**
+	 * Creates a GameMenu.
+	 * 
 	 * @param workspace
+	 *            the Workspace that owns the GameMenu.
 	 */
 	public GameMenu(Workspace workspace) {
 		super(workspace);

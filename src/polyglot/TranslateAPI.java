@@ -13,18 +13,17 @@ import com.google.api.services.translate.model.LanguagesResource;
 import com.google.api.services.translate.model.TranslationsListResponse;
 
 /**
+ * 
+ * This class interacts with Google's Cloud API directly.
+ * 
+ * Two different types of request are made: a translation request and a possible
+ * languages request. These requests respectively live in translate(List<String>
+ * phrases, String code) and List<String> languages().
+ * 
+ * TranslateAPI throws PolyglotExceptions, letting the caller determine how to
+ * handle them.
+ *
  * @author Elliott Bolzan
- *
- *         This class interacts with Google's Cloud API directly.
- * 
- *         Two different types of request are made: a translation request and a
- *         possible languages request. These requests respectively live in
- *         translate(List<String> phrases, String code) and List<String>
- *         languages().
- * 
- *         TranslateAPI throws PolyglotExceptions, letting the caller determine
- *         how to handle them.
- *
  */
 public class TranslateAPI {
 
