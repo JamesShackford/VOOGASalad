@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleDoubleProperty;
  * 
  * @author nikita
  * @author Jesse
+ * @author Mina
  */
 public class AchievementEntity extends Entity {
 
