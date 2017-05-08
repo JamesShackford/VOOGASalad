@@ -1,5 +1,11 @@
 package authoring.canvas;
 
+/**
+ * A utility class for creating a grid tile system.
+ * 
+ * @author jimmy
+ *
+ */
 public class GridUtil
 {
 	/**

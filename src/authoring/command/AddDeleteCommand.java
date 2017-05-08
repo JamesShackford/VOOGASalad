@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 /**
+ * A command to add or delete an EntityView from the LevelEditor.
  * 
  * @author jimmy
  *
@@ -18,6 +19,18 @@ public class AddDeleteCommand extends EntityCommand
 	private LevelEditor levels;
 	private boolean add;
 
+	/**
+	 * A command that will either add or delete the given EntityView from the
+	 * given LevelEditor. If the add boolean is true, then the entityView will
+	 * be added. Otherwise, the EntityView will be deleted.
+	 * 
+	 * @param entityView
+	 *            EntityView to be added/deleted
+	 * @param levels
+	 *            LevelEditor to add/delete the EntityView from
+	 * @param add
+	 *            true if adding EntityView, false if deleting EntityView
+	 */
 	public AddDeleteCommand(EntityView entityView, LevelEditor levels, boolean add)
 	{
 		super(entityView);

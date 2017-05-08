@@ -3,6 +3,8 @@ package authoring.command;
 import authoring.canvas.EntityView;
 
 /**
+ * Represents a command that is performed on a single entity. The execute()
+ * method applies to the entity in this class.
  * 
  * @author jimmy
  *

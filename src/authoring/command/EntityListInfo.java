@@ -7,6 +7,9 @@ import authoring.networking.Packet;
 import engine.entities.Entity;
 
 /**
+ * Info needed to represent a list of Entities in the game authoring
+ * environment. This information can be sent over a network to communicate an
+ * information about multiple Entities to another client.
  * 
  * @author jimmy
  *

@@ -12,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
+ * An ExpandablePane has a dynamic width and height that automatically updates
+ * to the maxX, maxY, minX, and minY values of the furthest entities in it.
  * 
  * @author jimmy
  *
