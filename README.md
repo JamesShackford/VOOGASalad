@@ -2,15 +2,16 @@
 
 A JavaFX team project (10-person group) for Duke's Computer Science 308 (Design and Implementation). For this final project, we built a game authoring engine and a game player (approximately 23,000 lines of code). 
 
-This program is capable of creating, editing, and playing scrolling-platformer games. It can also create many other games, like FIFA, checkers, etc. 
+This program is capable of creating, editing, and playing scrolling-platformer games such as Doodle Jump. It can also create many other games, like FIFA, checkers, etc. 
 
-An example video showing 10 sample games made with VOOGASalad can be found [here](https://vimeo.com/225642307).
+An example video showing 10 sample games made with VOOGASalad can be found [here](https://www.youtube.com/watch?v=wh1o5KRxGuo).
 
 Extra features are incorporated, like:
 
-- The ability to translate the user interface into all of the languages offered by Google translate at runtime. I developed this feature myself as a separate framework, called `polyglot`. It made use of Google's Cloud API.
+- The ability to post images and status updates to Facebook on behalf of a user. I developed this feature myself, utilizing Facebook's graph API. It can be seen in the `FacebookPoster` repo.
 - Networking ability. Live editing and chatting are available between different machines.
 - Random level generation.
+See below for more.
 
 ![](images/start.png)
 
