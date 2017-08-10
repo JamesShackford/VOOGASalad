@@ -11,6 +11,7 @@ Extra features are incorporated, like:
 - The ability to post images and status updates to Facebook on behalf of a user. I developed this feature myself, utilizing Facebook's graph API. It can be seen in the `FacebookPoster` repo.
 - Networking ability. Live editing and chatting are available between different machines.
 - Random level generation.
+
 See below for more.
 
 ![](images/start.png)
